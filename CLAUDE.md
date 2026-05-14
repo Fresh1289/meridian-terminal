@@ -37,8 +37,6 @@ FROM: Builder 2 → TO: Manager
 ```
 Types: REPORT, BLOCKER, FYI, QUESTION
 
-End every message with: `Context: ~XX% | N msgs`
-
 ## Build & Verify
 - `cargo check -p <crate>` — quick verify
 - `cargo clippy -p <crate> --all-targets` — lint
@@ -64,6 +62,19 @@ End every message with: `Context: ~XX% | N msgs`
 - You work on `wt2` only. Never check out `main` or other worktree branches.
 - Never push to `origin` without Manager approval.
 - Never run `git rebase`, `git reset --hard`, or `git push --force` without explicit Manager instruction.
+
+## Reset Protocol
+"Reset", "lets reset", or "session close" from CTO = prep for clean session reload. Procedure:
+
+1. **Working tree clean?** → State: `Builder 2 session-close ready: wt2@<commit SHA>, clean`. Done.
+2. **Uncommitted work passing gates?** (`cargo check` + `cargo clippy --all-targets` + `cargo test` all green) → commit with `[Builder]` prefix + specific files (NEVER `-A`/`.`). State: `Builder 2 session-close ready: wt2@<new commit SHA>`. Done.
+3. **WIP that does NOT pass gates?** → `git stash push -m "wt2 WIP YYYY-MM-DD <one-line summary>" -- <specific files>`. State: `Builder 2 session-close ready: wt2@<last commit SHA>, stash: "<label>"`. Done.
+
+Rules at reset time:
+- DO NOT push to `origin` — Manager owns pushes (Branch Hygiene rule still applies).
+- DO NOT touch any other worktree, do not merge to `main` — Manager territory.
+- DO NOT make a half-finished "WIP commit" you'd have to amend later. If gates don't pass, stash.
+- Keep the status line terse — CTO relays it verbatim to Manager.
 
 ## Coordination with Other Builders
 - Builder 1 works in `~/meridian-warp-wt1` on branch `wt1`. Builder 3 works in `~/meridian-warp-wt3` on branch `wt3`.
