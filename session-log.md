@@ -125,3 +125,9 @@
 [2026-05-14] FROM: Laniakea → TO: Manager | REPORT | ✅ 29 entries backfilled to ~/Vibe/Projects/Meridian/knowledge/ (Vibe commit 742afc7, pushed). Convention: one folder per category, {id}.md filenames, full schema in frontmatter, callouts + wikilinks, Obsidian stickers per category. Dual-write protocol codified in ~/laniakea/CLAUDE.md + state.md. Two surfaced items: untracked ~/Vibe/meridian-app/ cruft folder (only stale .git, no content); optional Bases-file enhancement for database view.
 
 [2026-05-14] Manager: added pointer to ~/meridian-warp/CLAUDE.md Memory & State section so future sessions know where Lani's Obsidian mirror lives.
+
+[2026-05-14] CTO: greenlit cruft delete + Bases file + vault-wide reorg. Combined directive sent to Lani (3 items).
+
+[2026-05-14] FROM: Laniakea → TO: Manager | REPORT | ✅ Item 1 (cruft folder deleted). ✅ Item 2 (Knowledge.base committed 0dbe628 with 6 views: by-recency, by-category, insights-only, active-watches, warp-fork-domain, decaying). ✅ Item 3 SURVEY (350 files, 1972 wikilinks, 52% broken — concentrated in paused miniclaude/). Proposed 5-pass execution; recommends 1-4 ratify, defer 5.
+
+[2026-05-14] FROM: Manager → TO: Laniakea | RATIFICATION | Greenlit passes 1-4 (quarantine miniclaude/, refresh Home.md, audit remaining broken links, frontmatter floor). Skip pass 5 (filename casing normalization — high blast radius, no clear win). Convention ratified for new notes only, no retroactive renames. Sequential execution, one commit per pass, push after each.
