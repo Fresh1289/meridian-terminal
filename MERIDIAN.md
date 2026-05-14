@@ -125,9 +125,17 @@ Grouped by domain. `[P1]` = phase 1 must-have, `[P2]` = phase 2, `[P3]` = post-c
 ## Phasing
 
 ### Phase 0 — Foundation (current)
+
+**Per-clone bootstrap (do once on every fresh clone — these are NOT optional):**
+- [x] Install Rust toolchain via rustup with `--default-toolchain` matching `rust-toolchain.toml` (currently 1.92.0). Add components `clippy` and `rustfmt`. Skipping this blocks pre-commit gates.
+- [x] Run `bash script/setup-merge-drivers.sh` from the repo root. This registers the `openwarp-ours` merge driver and enables `rerere`. Without it, every `merge=openwarp-ours` rule in `.gitattributes` is a silent no-op — protected paths (warp_ssh_manager, agent_sdk, blocklist, per-branch CLAUDE.md, etc.) will get clobbered on the next merge from upstream. This was missed during initial fork bootstrap on the MacBook (caught + fixed 2026-05-14 — see Laniakea failure 03-openwarp-ours-driver-never-registered).
+
+**Foundation deliverables:**
 - [x] Fork OpenWarp → `Fresh1289/meridian-terminal`
 - [x] Local clone at `~/meridian-warp` with `origin`, `openwarp`, `warp-upstream` remotes
 - [x] Laniakea standalone scaffolded at `~/laniakea/`
+- [x] Per-branch CLAUDE.md identity infrastructure for wt1/wt2/wt3 + merge=openwarp-ours protection on all 4 branches (2026-05-14)
+- [x] Session-log discipline ported from v1.5.0 → `~/meridian-warp/session-log.md` (2026-05-14)
 - [ ] Strip Warp brand assets (fonts, logo, wordmark) — do not redistribute
 - [ ] Map the upstream crate workspace; identify where Meridian crates plug in
 - [ ] Read `AGENTS.md`, `WARP.md`, `CONTRIBUTING.md` to internalize upstream conventions
