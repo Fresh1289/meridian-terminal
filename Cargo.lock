@@ -8110,6 +8110,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "meridian_agents"
+version = "0.1.0"
+dependencies = [
+ "async-process",
+ "command",
+ "libc",
+ "meridian_worktree",
+ "tempfile",
+ "thiserror 2.0.17",
+ "tokio",
+ "uuid",
+]
+
+[[package]]
 name = "meridian_laniakea"
 version = "0.0.0"
 dependencies = [
@@ -8119,6 +8133,31 @@ dependencies = [
  "tempfile",
  "thiserror 2.0.17",
  "tokio",
+]
+
+[[package]]
+name = "meridian_manager"
+version = "0.1.0"
+
+[[package]]
+name = "meridian_relay"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "serde",
+ "thiserror 2.0.17",
+ "tokio",
+ "uuid",
+]
+
+[[package]]
+name = "meridian_worktree"
+version = "0.1.0"
+dependencies = [
+ "command",
+ "futures",
+ "tempfile",
+ "thiserror 2.0.17",
 ]
 
 [[package]]

@@ -1,0 +1,16 @@
+[package]
+name = "meridian_worktree"
+authors = ["Warp Team <dev@warp.dev>"]
+version = "0.1.0"
+edition = "2024"
+publish.workspace = true
+license.workspace = true
+
+[dependencies]
+command = { workspace = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+command = { workspace = true }
+futures = { workspace = true }
+tempfile = { workspace = true }

@@ -1,0 +1,22 @@
+[package]
+name = "meridian_agents"
+authors = ["Warp Team <dev@warp.dev>"]
+version = "0.1.0"
+edition = "2024"
+publish.workspace = true
+license.workspace = true
+description = "Meridian agents — managed subprocess lifecycle for orchestrator-spawned agents"
+
+[dependencies]
+async-process = { workspace = true }
+command = { workspace = true }
+meridian_worktree = { workspace = true }
+thiserror = { workspace = true }
+tokio = { workspace = true, features = ["macros", "rt", "time"] }
+uuid = { workspace = true, features = ["v4"] }
+
+[target.'cfg(unix)'.dependencies]
+libc = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }
