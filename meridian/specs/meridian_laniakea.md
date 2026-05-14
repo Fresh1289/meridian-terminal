@@ -18,12 +18,17 @@ Knowledge engine — read/write the JSONL knowledge stores Laniakea (the standal
 
 ## Core Types
 
+> **Schema verified against on-disk JSONL on 2026-05-14 (Builder 3 BLOCKER).** Two corrections vs. the original spec:
+> 1. `id` is a kebab-case slug (e.g. `01-meridian-app-archive`), NOT a UUID. The standalone Lani CLI mints semantic slugs; UUIDs would diverge the schema permanently after first append.
+> 2. `timestamp` carries an offset (e.g. `+08:00`), not always `Z`. Use `DateTime<FixedOffset>` so round-trip is byte-identical to what the CLI writes.
+
 ```rust
 pub enum Category { Decision, Pattern, Failure, Preference, Insight }
+// serde(rename_all = "lowercase") so it matches "decision"/"pattern"/etc. on disk
 
 pub struct KnowledgeEntry {
-    pub id: Uuid,
-    pub timestamp: DateTime<Utc>,
+    pub id: String,                       // kebab-case slug, NOT Uuid
+    pub timestamp: DateTime<FixedOffset>, // preserves on-disk offset
     pub category: Category,
     pub summary: String,
     pub detail: String,
@@ -60,10 +65,11 @@ pub struct Query {
 serde = { version = "*", features = ["derive"] }
 serde_json = "*"
 chrono = { version = "*", features = ["serde"] }
-uuid = { version = "*", features = ["v4", "serde"] }
-tokio = { version = "*", features = ["fs", "rt", "macros"] }
 thiserror = "*"
 ```
+**Note:** No `uuid` (ids are slugs). No `tokio` if filesystem ops use std blocking I/O — the store is small (KBs); blocking reads are fine. If async is preferred for consistency with the rest of the orchestrator, use `tokio = { version = "*", features = ["fs", "rt", "macros"] }`. Builder's call.
+
+**Workspace clippy gotcha (lesson from B2's worktree slice):** `.clippy.toml` at the repo root disallows direct `tokio::process::Command` — use the workspace's `command::r#async::Command` instead if you need subprocess invocation. Doesn't apply to `meridian_laniakea` since this crate doesn't shell out, but mentioning so the pattern carries.
 
 ## First-Slice Scope
 

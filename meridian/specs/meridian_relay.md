@@ -37,6 +37,7 @@ pub struct RelayBus { /* sender + receiver halves */ }
 - `RelaySender::send(relay: Relay) -> Result<(), RelayError>`
 - `RelayReceiver::recv() -> Option<Relay>` (async)
 - `RelayBus::approve(id: Uuid) -> Result<(), RelayError>` (resolves the oneshot for a needs_approval relay)
+- `RelaySender::bus() -> &RelayBus` accessor — added during round 3 implementation since `new()` returns split halves and there's no other path to `approve` from the caller. Subject to refinement (e.g. `approve` may move to `RelaySender` or `RelayReceiver` directly in a follow-up).
 
 ## Errors
 `thiserror`-derived `RelayError` enum: `ChannelClosed`, `UnknownRelayId`, `AlreadyApproved`.
