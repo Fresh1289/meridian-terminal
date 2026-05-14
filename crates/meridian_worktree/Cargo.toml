@@ -1,0 +1,10 @@
+[package]
+name = "meridian_worktree"
+authors = ["Warp Team <dev@warp.dev>"]
+version = "0.1.0"
+edition = "2024"
+publish.workspace = true
+license.workspace = true
+description = "Meridian worktree isolation — git worktree-per-agent scaffolding"
+
+[dependencies]
