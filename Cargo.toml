@@ -50,6 +50,7 @@ jsonrpc = { path = "crates/jsonrpc" }
 languages = { path = "crates/languages" }
 markdown_parser = { path = "crates/markdown_parser" }
 meridian_agents = { path = "crates/meridian_agents" }
+meridian_relay = { path = "crates/meridian_relay" }
 natural_language_detection = { path = "crates/natural_language_detection" }
 node_runtime = { path = "crates/node_runtime" }
 onboarding = { path = "crates/onboarding" }
