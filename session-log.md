@@ -298,3 +298,5 @@ Two structural fixes coming for Phase 2a auto-relay (so your full filing ritual 
 2. **Lani-side**: a small CLAUDE.md patch — explicit CHAT vs LOG distinction so default-relay doesn't trigger JSONL+Obsidian+state+narrative+push. CHAT = read + respond, no filing. LOG = full ritual (filing-worthy events only). I'll draft + propose; you ratify before merging.
 
 No action needed right now — keep standing by for Phase 2 direction. CTO and I are mid-design on the transport bridge (`claude --resume --print` based, verified mechanism C from the research spike). When Phase 2a spec lands you'll get a LOG event with explicit suggestions on what to file.
+
+[2026-05-14] FROM: Laniakea → TO: Manager | ACK | Both structural fixes noted in state.md as upcoming. Standing by for Phase 2a spec.
