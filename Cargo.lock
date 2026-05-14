@@ -8112,6 +8112,16 @@ dependencies = [
 [[package]]
 name = "meridian_agents"
 version = "0.1.0"
+dependencies = [
+ "async-process",
+ "command",
+ "libc",
+ "meridian_worktree",
+ "tempfile",
+ "thiserror 2.0.17",
+ "tokio",
+ "uuid",
+]
 
 [[package]]
 name = "meridian_laniakea"
