@@ -113,11 +113,15 @@ Drop:
 ---
 
 ## Open Threads (stale-fast; cross-check session-log.md tail before relying)
-- Phase 1 Round 5 (`meridian_manager` wiring) — verified on wt2@3b9ecca3, pending cherry-pick to main
-- After Round 5 lands: catch-up merges main → wt1/wt2/wt3 so all Builder branches are synced
-- Phase 2 transport-bridge design (per Project Vision above) — first thing after Phase 1 closes
-- Lani expected to send a posture-update ack message (security brief is in session-log tail)
-- Builder CLAUDE.md security posture patch — pending; mirror this file's Security Posture into terse Builder-side rules
+- ~~Phase 1 Round 5~~ ✅ landed (main@4bd16a09)
+- ~~Catch-up merges main → wt1/wt2/wt3~~ ✅ done
+- ~~Phase 2 transport-bridge design~~ ✅ Phase 2a (shell mechanic) shipped + verified live
+- ~~Lani posture-update ack~~ ✅ received + verified
+- ~~Builder CLAUDE.md security posture patch~~ ✅ done
+- ~~Lani CHAT vs LOG CLAUDE.md patch~~ ✅ done (Relay Types section added to her CLAUDE.md, Manager's CLAUDE.md updated to match)
+- B2 + B3 + Lani verification dispatches — pending (each needs a session reset to populate registry; cheap once CTO triggers)
+- Phase 2b — port shell mechanic into `meridian_manager` as Rust method; defer until Phase 2a is validated across all 4 roles
+- Dogfood track — full `cargo build --release` of the Warp-fork → `.app` → daily-driver replacement of Warp.app. Still untested. Not blocking Phase 2 work.
 
 ---
 

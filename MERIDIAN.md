@@ -162,7 +162,8 @@ Grouped by domain. `[P1]` = phase 1 must-have, `[P2]` = phase 2, `[P3]` = post-c
 - [ ] R1-R9 reliability surface ported
 
 ### Phase 2 — Pipeline & DAG
-- [ ] **Transport bridge** — extend `meridian_relay` so the bus can deliver across panes (Manager pane writes into Builder pane's running Claude Code CLI; ingests REPORTs back). Three candidate designs: Warp-native pane API (most ergonomic, requires being inside the Warp binary), per-agent file-mailbox (`~/.meridian/relay/wt1/{inbox,outbox}.jsonl`, simple + transport-agnostic), per-agent IPC socket (cleanest, requires a small Builder-side wrapper). The bus stays as Phase 1 designed it; a `Transport` trait gets bolted under it with `InProcess` (today) and `WarpPane`/`FileMailbox`/`IpcSocket` (Phase 2) as impls.
+- [x] **Transport bridge — Phase 2a (shell-based mechanic)** ✅ shipped 2026-05-14. `script/meridian-dispatch.sh` + `script/meridian-record-session.sh` + per-worktree `SessionStart` hooks. Manager dispatches via `claude --resume <id> --print --output-format json --dangerously-skip-permissions`; session UUID + cwd auto-registered by hook at `~/.meridian/agents/<role>/`. Verified live: Manager → Builder 1 round-trip in ~10s, $0.21 per dispatch. Replaces the copy-paste relay step. NO Rust crate changes this round.
+- [ ] **Transport bridge — Phase 2b (Rust integration)** — port the shell mechanic into `meridian_manager` as `Manager::dispatch_to(role, text) -> Result<Relay, ManagerError>`. Shell-out under the hood; future evolution to a `Transport` trait once a second transport (Warp-native pane API, IPC socket) is needed.
 - [ ] Task DAG queue + self-heal
 - [ ] Multi-step pipeline (Manager → Builder → QA loop)
 - [ ] Cost tracking / token budgets / model swap
