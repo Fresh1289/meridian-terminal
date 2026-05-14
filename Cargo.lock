@@ -8112,6 +8112,14 @@ dependencies = [
 [[package]]
 name = "meridian_laniakea"
 version = "0.0.0"
+dependencies = [
+ "chrono",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "thiserror 2.0.17",
+ "tokio",
+]
 
 [[package]]
 name = "mermaid_to_svg"
