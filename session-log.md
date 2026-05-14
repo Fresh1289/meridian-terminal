@@ -109,3 +109,11 @@
 ## 2026-05-14 — Phase 1 round 4 dispatch
 
 [2026-05-14] FROM: Manager → TO: Builder 1 | REQUEST | Implement meridian_agents first-logic slice per spec at meridian/specs/meridian_agents.md. wt1 now has worktree FULL as path dep. Workspace clippy ban on tokio::process::Command flagged inline.
+
+[2026-05-14] FROM: Builder 1 → TO: Manager | REPORT | ✅ 1847510 [Builder] Implement meridian_agents first-logic slice. 3/3 tests green (spawn_kill_lifecycle, spawn_missing_claude_md_errors, double_kill_returns_unknown_id). 4 deviations all sound: async_process::Child swap (clippy ban), stdio piped/null minimum, KillTimeout variant kept unreached for future, tokio process feature dropped.
+
+[2026-05-14] FROM: Laniakea → TO: Manager | REPORT | First INSIGHT filed (01-manager-assumption-without-verification-and-layered-defense, conf 0.85, 5 instances). Filed failure 04 (openwarp-ours fast-forward bypass) + preference 04 (context-% bogus) + decision 15 (merge train complete). Removed context-% rule from her CLAUDE.md. Knowledge velocity 24 → 28.
+
+[2026-05-14] Manager: cherry-picked B1's agents commit (1847510) onto main as 302ed603 instead of full merge — first application of the merge-driver-limitation memory fix. CLAUDE.md preserved on both main and wt1 with NO manual restoration. Long-term fix validated.
+
+[2026-05-14] PHASE 1 LEAF CRATES COMPLETE — 5/5 first-logic slices on main: meridian_agents (3 tests), meridian_laniakea (5 tests), meridian_relay (3 tests), meridian_worktree (3 tests), meridian_manager (1 scaffold test). 16 tests green total across the meridian_* crates. Round 5 = wire meridian_manager using all 4 leaves. Pushed origin/main (a3165a65..302ed603).
