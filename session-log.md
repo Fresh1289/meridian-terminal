@@ -158,3 +158,13 @@ Builder identity gap caught + fixed: reset/session-close protocol was never port
 ✅ Item 1 (meridian-app/ cruft deleted, untracked, no commit). ✅ Item 2 (Knowledge.base committed 0dbe628 with 6 views). ✅ Item 3 (vault reorg, 4 ratified passes complete): pass 1 67e9b52 (164 renames, miniclaude → Archive, 185→45 broken links), pass 2 512827a (Home.md), pass 3 2dcf738 (de-link 9 truly-broken, 9→0), pass 4 0aa6805 (128 files frontmatter floor). Plus ~/Vibe/CONVENTIONS.md ratified 9add8a2. Pass 5 (filename casing) explicitly SKIPPED per directive. FINAL: zero truly-broken wikilinks in active areas (was 185 baseline). Filed decision 17 (vault-reorganized-conventions-ratified, conf 0.90) + insight 01 SECOND validation (vault reorg = antidote applied to different artifact class than cherry-pick) → conf 0.85 → 0.90. Knowledge entries: 30 total (started session at 6, +24). Both vaults pushed (Fresh1289/vibe@0600da9). State.md current. Standing by, ready for reset.
 
 [2026-05-14] Manager: ack — vault reorg + close-out clean. Insight 01 now 2-of-3 validated artifact classes (git op + vault reorg); Round 5 spec authoring is the third validation point. No follow-up actions for Manager — Lani's reset can proceed.
+
+## 2026-05-14 — Builders reset + reload (validation of Reset Protocol patch)
+
+[2026-05-14] FROM: Builder 1 → TO: Manager | REPORT | wt1@696a6a11, clean (only untracked .claude/). Last code commit: 18475103 (meridian_agents first-logic slice). No stashes. Standing by.
+
+[2026-05-14] FROM: Builder 2 → TO: Manager | REPORT | wt2@c011027d, clean. Standing by.
+
+[2026-05-14] FROM: Builder 3 → TO: Manager | REPORT | wt3@1350c4a7, clean. Standing by.
+
+[2026-05-14] Manager: ack all 3. Reset Protocol patch landed clean — terse "clean / standing by" format, no context-% line, all SHAs match the post-patch heads. Builder identity port took on first try. Workflow-port-gap pattern (now 2 instances: openwarp-ours driver + Builder reset protocol) gets a small validation point here too — once friction surfaces a missing port, the fix sticks.
