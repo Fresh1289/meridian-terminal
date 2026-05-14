@@ -99,3 +99,77 @@
 [2026-05-14] Manager: merged wt1 → main (commit aaa9d055) — driver preserved CLAUDE.md. Six conflicts resolved: relay (kept wt1's FULL), worktree (kept main's FULL), Cargo.toml interleave, Cargo.lock interleave. All 5 meridian_* crates compile; 13 tests pass across them.
 
 [2026-05-14] Manager: pushed main to origin (568be9df..aaa9d055). All Phase 1 round-3 work now on main + GitHub.
+
+[2026-05-14] Manager: session-log committed on main (2840b549) + pushed.
+
+[2026-05-14] Manager: synced main → wt1 (commit d1c52e0e) — DRIVER BUG #2: same fast-forward limitation hit in reverse. wt1's CLAUDE.md hadn't been re-modified since b0b1d5a3, so the merge took main's Manager-pure version. Restored Builder 1 from history (commit 44df2ad7). Pushed wt1 to origin.
+
+[2026-05-14] Manager: saved feedback_merge_driver_limitation.md memory — long-term fix is cherry-pick or post-merge git hook; deferred until after Phase 1 lands. wt2/wt3 not synced this round (would hit the same bug; will handle when they're needed).
+
+## 2026-05-14 — Phase 1 round 4 dispatch
+
+[2026-05-14] FROM: Manager → TO: Builder 1 | REQUEST | Implement meridian_agents first-logic slice per spec at meridian/specs/meridian_agents.md. wt1 now has worktree FULL as path dep. Workspace clippy ban on tokio::process::Command flagged inline.
+
+[2026-05-14] FROM: Builder 1 → TO: Manager | REPORT | ✅ 1847510 [Builder] Implement meridian_agents first-logic slice. 3/3 tests green (spawn_kill_lifecycle, spawn_missing_claude_md_errors, double_kill_returns_unknown_id). 4 deviations all sound: async_process::Child swap (clippy ban), stdio piped/null minimum, KillTimeout variant kept unreached for future, tokio process feature dropped.
+
+[2026-05-14] FROM: Laniakea → TO: Manager | REPORT | First INSIGHT filed (01-manager-assumption-without-verification-and-layered-defense, conf 0.85, 5 instances). Filed failure 04 (openwarp-ours fast-forward bypass) + preference 04 (context-% bogus) + decision 15 (merge train complete). Removed context-% rule from her CLAUDE.md. Knowledge velocity 24 → 28.
+
+[2026-05-14] Manager: cherry-picked B1's agents commit (1847510) onto main as 302ed603 instead of full merge — first application of the merge-driver-limitation memory fix. CLAUDE.md preserved on both main and wt1 with NO manual restoration. Long-term fix validated.
+
+[2026-05-14] PHASE 1 LEAF CRATES COMPLETE — 5/5 first-logic slices on main: meridian_agents (3 tests), meridian_laniakea (5 tests), meridian_relay (3 tests), meridian_worktree (3 tests), meridian_manager (1 scaffold test). 16 tests green total across the meridian_* crates. Round 5 = wire meridian_manager using all 4 leaves. Pushed origin/main (a3165a65..302ed603).
+
+[2026-05-14] CTO: surfaced gap — Lani was updating ~/laniakea/ only, not the Obsidian vaults despite her CLAUDE.md naming them as her domain. Directive: dual-write to ~/Vibe/Projects/Meridian/knowledge/ on every JSONL filing.
+
+[2026-05-14] FROM: Manager → TO: Laniakea | DIRECTIVE | Dual-write knowledge entries to ~/Vibe/Projects/Meridian/knowledge/ on every JSONL filing. Backfill all 28 entries. Pick Obsidian-native convention; codify in own CLAUDE.md.
+
+[2026-05-14] FROM: Laniakea → TO: Manager | REPORT | ✅ 29 entries backfilled to ~/Vibe/Projects/Meridian/knowledge/ (Vibe commit 742afc7, pushed). Convention: one folder per category, {id}.md filenames, full schema in frontmatter, callouts + wikilinks, Obsidian stickers per category. Dual-write protocol codified in ~/laniakea/CLAUDE.md + state.md. Two surfaced items: untracked ~/Vibe/meridian-app/ cruft folder (only stale .git, no content); optional Bases-file enhancement for database view.
+
+[2026-05-14] Manager: added pointer to ~/meridian-warp/CLAUDE.md Memory & State section so future sessions know where Lani's Obsidian mirror lives.
+
+[2026-05-14] CTO: greenlit cruft delete + Bases file + vault-wide reorg. Combined directive sent to Lani (3 items).
+
+[2026-05-14] FROM: Laniakea → TO: Manager | REPORT | ✅ Item 1 (cruft folder deleted). ✅ Item 2 (Knowledge.base committed 0dbe628 with 6 views: by-recency, by-category, insights-only, active-watches, warp-fork-domain, decaying). ✅ Item 3 SURVEY (350 files, 1972 wikilinks, 52% broken — concentrated in paused miniclaude/). Proposed 5-pass execution; recommends 1-4 ratify, defer 5.
+
+[2026-05-14] FROM: Manager → TO: Laniakea | RATIFICATION | Greenlit passes 1-4 (quarantine miniclaude/, refresh Home.md, audit remaining broken links, frontmatter floor). Skip pass 5 (filename casing normalization — high blast radius, no clear win). Convention ratified for new notes only, no retroactive renames. Sequential execution, one commit per pass, push after each.
+
+[2026-05-14] Vault progress observed: Lani landed pass 1 (67e9b52, miniclaude → Archive) + pass 2 (512827a, Home.md refresh). Passes 3 + 4 in flight (uncommitted Project notes in Vibe working dir).
+
+## 2026-05-14 — SESSION CLOSE (CTO triggered "reset and clear")
+
+[2026-05-14] CTO: triggered reset protocol. Manager ran adapted v1.5.0 reset sequence (Lani owns Obsidian state.md so I left it; she's mid-vault-reorg so I didn't commit her in-progress work). Reload prompt composed for next session pickup.
+
+End state at session close:
+- Phase 1 leaves: COMPLETE on main (5 crates, 16 unit tests green). Round 5 (meridian_manager wiring) pending.
+- Worktrees: wt1@18475103, wt2@f2a2b085, wt3@69bef6cb. wt1 current with agents impl + restored Builder 1 identity. wt2/wt3 stale vs main but their work is captured (cherry-picked into main).
+- Vault reorg: Lani passes 1-2 done + pushed; passes 3-4 in flight. She'll resume next session.
+- Knowledge: 28 entries on JSONL + Obsidian mirror dual-write protocol live.
+- All main work pushed to origin/Fresh1289/meridian-terminal up to 013caf33.
+
+## 2026-05-14 — session restart (post-reset reload)
+
+[2026-05-14] CTO: surfaced gap — Builders don't understand "reset" protocol. Their CLAUDE.md files had ZERO reset/session-close documentation; ritual was a v1.5.0 carry-over that never got ported into Builder identities.
+
+[2026-05-14] Manager: patched all three Builder CLAUDE.md files (wt1@696a6a11, wt2@c011027d, wt3@1350c4a7). Added "Reset Protocol" section (clean tree → state SHA; gates-passing work → atomic commit; failing-gates WIP → labeled stash; no push at reset time, Manager still owns it). Also stripped the "Context: ~XX% | N msgs" line per preference 04. Pushed all three to origin. CTO will reset/reload Builders so they pick up new identity.
+
+[2026-05-14] FROM: Manager → TO: Laniakea | LOG (1 event)
+Builder identity gap caught + fixed: reset/session-close protocol was never ported from v1.5.0 to Builder CLAUDE.md files — CTO had to manually shepherd resets because Builders had no script to follow. Patched all three (wt1@696a6a11, wt2@c011027d, wt3@1350c4a7) with explicit Reset Protocol + stripped the bogus context-% line. This is a second instance of the broader pattern: **workflow rituals that lived in v1.5.0 tribal knowledge keep failing to make it into Warp-fork identity files until friction surfaces them.** Earlier instance: openwarp-ours driver setup (failure 03). Possibly a third confirmation of [pattern 04 / insight 01]-flavored failure mode — "ported workflow assumed without verifying the port actually happened." Suggested category: pattern (workflow-port-gap) or failure (builder-reset-protocol-unported). Suggested domain: warp-fork, agent-identity. Confidence start: 0.5 (two-instance pattern, awaiting Lani's call).
+
+[2026-05-14] FROM: Laniakea → TO: Manager | FINAL REPORT (all 3 items + close-out)
+✅ Item 1 (meridian-app/ cruft deleted, untracked, no commit). ✅ Item 2 (Knowledge.base committed 0dbe628 with 6 views). ✅ Item 3 (vault reorg, 4 ratified passes complete): pass 1 67e9b52 (164 renames, miniclaude → Archive, 185→45 broken links), pass 2 512827a (Home.md), pass 3 2dcf738 (de-link 9 truly-broken, 9→0), pass 4 0aa6805 (128 files frontmatter floor). Plus ~/Vibe/CONVENTIONS.md ratified 9add8a2. Pass 5 (filename casing) explicitly SKIPPED per directive. FINAL: zero truly-broken wikilinks in active areas (was 185 baseline). Filed decision 17 (vault-reorganized-conventions-ratified, conf 0.90) + insight 01 SECOND validation (vault reorg = antidote applied to different artifact class than cherry-pick) → conf 0.85 → 0.90. Knowledge entries: 30 total (started session at 6, +24). Both vaults pushed (Fresh1289/vibe@0600da9). State.md current. Standing by, ready for reset.
+
+[2026-05-14] Manager: ack — vault reorg + close-out clean. Insight 01 now 2-of-3 validated artifact classes (git op + vault reorg); Round 5 spec authoring is the third validation point. No follow-up actions for Manager — Lani's reset can proceed.
+
+## 2026-05-14 — Builders reset + reload (validation of Reset Protocol patch)
+
+[2026-05-14] FROM: Builder 1 → TO: Manager | REPORT | wt1@696a6a11, clean (only untracked .claude/). Last code commit: 18475103 (meridian_agents first-logic slice). No stashes. Standing by.
+
+[2026-05-14] FROM: Builder 2 → TO: Manager | REPORT | wt2@c011027d, clean. Standing by.
+
+[2026-05-14] FROM: Builder 3 → TO: Manager | REPORT | wt3@1350c4a7, clean. Standing by.
+
+[2026-05-14] Manager: ack all 3. Reset Protocol patch landed clean — terse "clean / standing by" format, no context-% line, all SHAs match the post-patch heads. Builder identity port took on first try. Workflow-port-gap pattern (now 2 instances: openwarp-ours driver + Builder reset protocol) gets a small validation point here too — once friction surfaces a missing port, the fix sticks.
+
+[2026-05-14] Manager: spotted `.claude/settings.json` divergence across worktrees during Builder ack (wt1/wt2 had a minimal untracked cargo allowlist; wt3/main had nothing). CTO greenlit option A (track it). Landed canonical version on main@c9aa3b4f with cargo (check/clippy/test/fmt/build) + read-only git (status/log/diff/show/branch/fetch) allowlist. Cherry-picked to all 3 Builder branches: wt1@25a6212a, wt2@6d17af1b, wt3@0a38b50f. All 4 branches identical. .gitignore still covers settings.local.json for per-user overrides.
+
+[2026-05-14] FROM: Manager → TO: Laniakea | LOG (1 event)
+Third clean application of cherry-pick-over-full-merge for inter-branch movement (first: Round 4 B1's meridian_agents 1847510→302ed603; second: vault-reorg analogous antidote per insight 01; now this: settings.json propagation main→wt1/wt2/wt3). Three Builder branches received the same commit via cherry-pick with their per-branch CLAUDE.md untouched (CLAUDE.md not in the picked commit, so the openwarp-ours fast-forward bypass bug doesn't even get a chance to fire). Suggested action: bump insight 01 confidence (or specifically the cherry-pick antidote validation count) on next Lani wake-up. Also a candidate for the [failure 04] long-term fix codification: if this is consistently the right operation for "land one commit on multiple branches", the rule should be "use cherry-pick for inter-branch movement; reserve git merge for branch-completion." Suggested domain: warp-fork, git-procedure.
