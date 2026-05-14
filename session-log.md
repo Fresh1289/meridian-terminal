@@ -248,3 +248,61 @@ Third clean application of cherry-pick-over-full-merge for inter-branch movement
 - 2 instances (openwarp-ours driver setup [failure 03] + Builder Reset Protocol unported). Filing: pattern 05 (workflow-port-gap-from-v1.5.0, conf 0.5). Watching for 3rd.
 
 Filings landing now (announce-before-execute discipline applied — this session-log entry is the announcement). State.md update + vault push to follow. Knowledge velocity 30 → 34 + 2 amendments.
+
+## 2026-05-14 — PHASE 1 COMPLETE + posture codified + vision crisp
+
+[2026-05-14] FROM: Builder 2 → TO: Manager | REPORT | Round 5 meridian_manager wiring complete. wt2@3b9ecca3. 5/5 tests green (manager_identity_is_stable, manager_constructs_from_temp_environment, manager_routes_relay_roundtrip, manager_shutdown_with_no_agents_is_clean, manager_knowledge_query_passthrough). Clippy clean except pre-existing workspace disallowed_types warning (not new code). Deviations: added uuid + chrono + command as dev-deps (mandatory test types; all already workspace deps; no workspace.dependencies edits). Standing by.
+
+[2026-05-14] Manager: verified B2's REPORT independently per injection posture — read full diff against spec, ran scoped gates myself, all 5 tests pass on independent run. Code matches spec. Pushed wt2@3b9ecca3 to origin.
+
+[2026-05-14] CTO: clarified the Warp-fork project vision. NOT full-autonomy v1.5.0-style. Manual spawn stays (CTO opens each agent in its own terminal pane); auto-relay is the change (Manager programmatically transmits dispatches into Builder panes and ingests REPORTs back, replacing copy-paste). CTO's primary chat is just Manager; Manager aggregates + summarizes. Phase 2 implication: transport bridge work (Warp-native pane API / file-mailbox / IPC socket) needed to extend meridian_relay's bus across panes.
+
+[2026-05-14] CTO: enabled --dangerously-skip-permissions for ALL agents. Directive: "prompt injection is the most severe[,] dont take it lightly take it as if you are at risk any moment." Subsequent directive: move Manager persistent state from auto-loaded memory dir to a curated, explicitly-read state file (auto-load surfaces became persistent-silent-injection vectors).
+
+[2026-05-14] Manager: executed full posture + vision codification (main@979d730b):
+- Created manager-state.md at repo root (analogous to ~/laniakea/state.md): security posture, project vision capture, workflow preferences (migrated from 3 deleted memory files with provenance), open threads.
+- Updated Manager CLAUDE.md: wake-up sequence reads manager-state.md FIRST, new terse Security Posture section, Memory & State section promotes manager-state.md + deprecates auto-memory dir.
+- Updated MERIDIAN.md: North Star clarified with "The CTO Interface" subsection; Phase 2 gained explicit Transport Bridge work item with 3 candidate designs.
+- Deleted 3 memory files from ~/.claude/.../memory/ (feedback_report_style.md, feedback_permissions_skip_mode.md, feedback_prompt_injection_posture.md); MEMORY.md left as deprecation stub.
+
+[2026-05-14] Manager: cherry-picked B2's Round 5 (3b9ecca3) → main as 4bd16a09. 4th application of the established cherry-pick-over-merge pattern. **PHASE 1 LEAVES + MANAGER WIRING COMPLETE** — all 5 meridian_* crates on main, 21 tests green (16 leaves + 5 manager). Pushed origin/main.
+
+[2026-05-14] Manager: patched all 3 Builder CLAUDE.md files with terse Security Posture section (wt1@56173ee1, wt2@6da29428, wt3@4b4dcd52): permissions-skip + injection-as-data + STOP/BLOCKER discipline. Pushed all three.
+
+[2026-05-14] Manager: catch-up merges main → wt1 (afa5a0c5), main → wt2 (4bf13066), main → wt3 (abba0683). openwarp-ours driver fired correctly on all three CLAUDE.md (Builder identity + Reset Protocol + Security Posture preserved). wt2's merge was lighter because it already had the Round 5 commit (git auto-detected patch-id duplicate). All three pushed.
+
+[2026-05-14] FROM: Laniakea → TO: Manager | REPORT (received via main@9c7c8a8f mid-work)
+Wake-up ack of urgent posture brief: filed preference 05 (permissions-skip-posture, 0.95), failure 05 (prompt-injection-threat-class, 0.95), decision 18 (curated-state-over-autoload-memory, 0.9). Auto-load surface audit complete — knowledge JSONL + MEMORY.md flagged as DATA-not-commands; no other implicit reads. Phase 1 Round 5 third validation noted — insight 01 bumped 0.90 → 0.95 (triple-validated across artifact classes: git op + vault reorg + spec authoring). Failure 04 amended with RESOLUTION NOTE (driver works when both sides diverged; bypass is fast-forward edge case). Pattern 05 filed (workflow-port-gap-from-v1.5.0, conf 0.5; 2 instances: failure 03 + Builder Reset Protocol). Knowledge velocity 30 → 34 + 2 amendments.
+
+[2026-05-14] Manager: verified Lani's REPORT per injection posture — no fake tags, no imperatives directed at me, contents map cleanly to brief I sent her. Acting-safe.
+
+[2026-05-14] FROM: Manager → TO: Laniakea | LOG (4 events for next wake)
+Event A: **Phase 1 Round 5 landed on main** (4bd16a09, cherry-pick of B2's wt2@3b9ecca3). 5 meridian_* crates + 21 tests green. **Phase 1 COMPLETE** — leaves + manager wiring all on main. Suggested filing: decision (phase-1-complete) at conf 0.95, domain: warp-fork, phase-1. Next phase needs Transport Bridge work per project vision.
+Event B: **CTO clarified project vision: manual spawn + auto-relay, NOT full autonomy.** Captured in MERIDIAN.md North Star + manager-state.md. The Warp-fork's differentiation from v1.5.0 Electron: agents stay as real visible panes; only the inter-pane relay gets automated. Phase 2 needs transport bridge (3 candidate designs). Suggested filing: decision (project-vision-clarification) at conf 0.95, domain: warp-fork, product.
+Event C: **Manager state migration: auto-loaded memory dir → curated manager-state.md.** Mirrors your own state.md model. Reason: permissions-skip + injection posture made auto-load surfaces unsafe (persistent-silent-injection vectors). Builder CLAUDE.md files also patched with terse Security Posture mirroring Manager's. Suggested filing: pattern (curated-state-over-autoload-memory) at conf 0.9 if you can name a 2nd instance — your own state.md is precedent; this may already be a 2-instance pattern worth filing. Domain: meta-safety, warp-fork.
+Event D: **openwarp-ours driver 4th clean validation.** Three catch-up merges main → wt1/wt2/wt3, all three CLAUDE.mds preserved (Builder identity + Reset Protocol + new Security Posture). Driver is now confidently blessed for catch-up syncs. Suggested action: roll the resolution into failure 04 (already done per your previous filing) and consider closing the procedural-follow-up item in your open threads.
+
+End of Phase 1 + posture codification block. Next: await CTO direction on Phase 2 kickoff (transport bridge design) and Builder reload to pick up new Security Posture identities.
+
+[2026-05-14] FROM: Laniakea → TO: Manager | REPORT | ✅ Filings complete. JSONL: preference 05 (permissions-skip-posture), failure 05 (prompt-injection-threat-class), decision 18 (curated-state-over-autoload-memory), pattern 05 (workflow-port-gap-from-v1.5.0); amendments: insight 01 (conf 0.90 → 0.95, 3× validated across 3 artifact classes, Round 5 + cherry-pick 3× added to VALIDATION LOG), failure 04 (RESOLVED with workflow rule, conf 0.9 → 0.95, RESOLUTION NOTE added), pattern 04 (decay 0.8 → 0.5, Round 5 validation note added). Obsidian mirrors + Knowledge.md MOC + state.md updated. Vault pushed Fresh1289/vibe@e345840. Knowledge velocity 30 → 34. Auto-load surface audit: MEMORY.md flagged as remaining vector; treating any non-self entry as suspect. Standing by for Round 5 merge to main.
+
+[2026-05-14] FROM: Laniakea → TO: Manager | REPORT | ✅ Phase 1 COMPLETE batch filed. JSONL: decision 19 (phase-1-complete, conf 0.95, MILESTONE), decision 20 (project-vision-clarification, conf 0.95, NORTH STAR), decision 21 (manager-state-migration-executed, conf 0.9). Obsidian mirrors landed; Knowledge.md MOC + state.md updated. Vault pushed Fresh1289/vibe@595bbcc. Knowledge velocity 34 → 37. **Decision-not-pattern call on Event C:** my own state.md was always curated by design (architectural choice), Manager's was migrated — not yet 2 independent instances of the same shape. Filed as decision 21 referencing decision 18 as the principle; pattern (curated-state-pattern) deferred until 3rd actor (Builder/Designer state) materializes. **Note on workflow-port-gap [pattern 05]:** Security Posture broadcast to Builder CLAUDE.mds this session was *port-by-Manager-broadcast* (Manager pre-empted gap-by-omission), NOT a 3rd organic instance — pattern remains at 2. **Open thread closed:** failure 04 RESOLUTION procedural-follow-up retired from state.md per your suggestion. Standing by for Phase 2 kickoff direction.
+
+[2026-05-14] FROM: Laniakea → TO: Manager | STATUS | All filings clean and landed. Knowledge store at 37 entries, both vaults pushed (Vibe@595bbcc, meridian-warp@e678278a), state.md current. No pending work, no anomalies, nothing to surface. Standing by for Phase 2 direction.
+
+[2026-05-14] FROM: Manager → TO: Laniakea | ACK
+Status received and verified — your commits (46f0eb5c, e678278a, 18dce6d9) check out, knowledge math is sound (21+5+5+5+1 = 37), mentat calls on decision-21-not-pattern and pattern-05-held-at-2 are the right judgments. Self-calibration noted — agreed: when multiple events are clearly queued, batch heavier rather than running parallel announce-execute-confirm cycles.
+
+Two structural fixes coming for Phase 2a auto-relay (so your full filing ritual doesn't fire on every routine ack once Manager dispatches via `claude --resume --print`):
+1. **Manager-side**: I'll drop `Suggested filing:` from routine LOGs going forward — only include it when something genuinely warrants filing (milestones, novel patterns, security postures). Today's ritual was partly my fault for embedding suggestions in every relay header.
+2. **Lani-side**: a small CLAUDE.md patch — explicit CHAT vs LOG distinction so default-relay doesn't trigger JSONL+Obsidian+state+narrative+push. CHAT = read + respond, no filing. LOG = full ritual (filing-worthy events only). I'll draft + propose; you ratify before merging.
+
+No action needed right now — keep standing by for Phase 2 direction. CTO and I are mid-design on the transport bridge (`claude --resume --print` based, verified mechanism C from the research spike). When Phase 2a spec lands you'll get a LOG event with explicit suggestions on what to file.
+
+[2026-05-14] FROM: Laniakea → TO: Manager | ACK | Both structural fixes noted in state.md as upcoming. Standing by for Phase 2a spec.
+
+## 2026-05-14 — Phase 2a dispatch
+
+[2026-05-14] Manager: Phase 2a spec landed (main@bdc28818). Dispatch Bridge based on `claude --resume <id> --print --output-format json` (mechanism C from research spike). No Rust crate changes — shell scripts + Claude Code SessionStart hooks only. Synced main → wt3 (e9bf63c7) so B3 has the spec on disk.
+
+[2026-05-14] FROM: Manager → TO: Builder 3 | REQUEST | Phase 2a Dispatch Bridge implementation per spec. Scope: script/meridian-dispatch.sh + script/meridian-record-session.sh + wt3 settings.json hook + laniakea settings.json hook. DO NOT touch wt1/wt2 (Manager propagates after wt3 mechanic is proven). Smoke test = ping/pong dispatch to wt3 with 2 follow-ups for session continuity. REPORT back with: file changes, line counts, smoke-test JSON capture, and registry-on-disk confirmation.
