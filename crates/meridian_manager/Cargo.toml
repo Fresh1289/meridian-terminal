@@ -8,3 +8,15 @@ license.workspace = true
 description = "Meridian Manager persona — orchestrator entry point for multi-agent routing"
 
 [dependencies]
+meridian_agents = { workspace = true }
+meridian_laniakea = { workspace = true }
+meridian_relay = { workspace = true }
+meridian_worktree = { workspace = true }
+thiserror = { workspace = true }
+tokio = { workspace = true, features = ["macros", "rt", "sync"] }
+
+[dev-dependencies]
+chrono = { workspace = true }
+command = { workspace = true }
+tempfile = { workspace = true }
+uuid = { workspace = true }
