@@ -5,6 +5,12 @@ version = "0.1.0"
 edition = "2024"
 publish.workspace = true
 license.workspace = true
-description = "Meridian worktree isolation — git worktree-per-agent scaffolding"
 
 [dependencies]
+command = { workspace = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+command = { workspace = true }
+futures = { workspace = true }
+tempfile = { workspace = true }
