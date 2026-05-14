@@ -1,0 +1,10 @@
+[package]
+name = "meridian_manager"
+authors = ["Warp Team <dev@warp.dev>"]
+version = "0.1.0"
+edition = "2024"
+publish.workspace = true
+license.workspace = true
+description = "Meridian Manager persona — orchestrator entry point for multi-agent routing"
+
+[dependencies]
