@@ -154,6 +154,12 @@ Grouped by domain. `[P1]` = phase 1 must-have, `[P2]` = phase 2, `[P3]` = post-c
 - [ ] Designer + QA agent roles (re-introduce)
 - [ ] Public launch
 
+## Potential Addons
+
+External projects to evaluate for integration, inspiration, or competitive read. Not committed — parked here so they don't get lost.
+
+- **OpenSwarm** (VRSEN/OpenSwarm, open-sourced 2026-05-12) — terminal-based multi-agent orchestrator, 8 specialized agents (research, slides, data, video, image, docs, etc.), "Claude code for everything except coding." Worth studying for: agent-routing patterns, CLI-only UX (matches our P1 sidebar-only direction), how they slice specialist roles vs. our Manager/Builder/QA. Read before locking the `meridian-manager` crate API. https://github.com/VRSEN/OpenSwarm
+
 ## Open Questions
 
 1. **AGPL vs containment** — answer before any commercial conversation
