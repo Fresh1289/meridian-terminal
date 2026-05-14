@@ -1,0 +1,5 @@
+[package]
+name = "meridian_laniakea"
+edition = "2024"
+publish.workspace = true
+license.workspace = true
