@@ -45,3 +45,8 @@ app/src/ssh_manager/** merge=openwarp-ours
 app/src/pane_group/pane/ssh_server_pane.rs merge=openwarp-ours
 crates/persistence/migrations/2026-05-04-120000_add_ssh_manager_tables/** merge=openwarp-ours
 crates/persistence/migrations/2026-05-04-130000_add_ssh_nodes_is_collapsed/** merge=openwarp-ours
+
+# 每个 worktree 分支(wt1/wt2/wt3)在 CLAUDE.md 顶部覆盖了 main 的 Manager 模板,
+# 写入了自己的 Builder N 身份。合并(任一方向)时各分支保留自己的 CLAUDE.md。
+# 没有这条规则,wt1→main 第一次合并时 Builder 身份就会被 main 的版本清掉。
+CLAUDE.md merge=openwarp-ours
