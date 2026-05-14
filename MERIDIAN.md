@@ -19,6 +19,18 @@ A native, Rust-based, AI-coding-agent orchestrator that:
 - Treats the **terminal as the substrate**, not a tab — Warp's foundation makes this real
 - Keeps **Obsidian vaults** as the source of truth for cross-session knowledge
 
+### The CTO Interface (clarified 2026-05-14)
+
+The Warp-fork is **not** a full-autonomy orchestrator like the v1.5.0 Electron app was. The vision is more surgical:
+
+- **Manual spawn stays.** CTO opens each agent in its own terminal pane (worktree + `claude` CLI per agent), keeping that direct pane affordance always available. Builders/Designers/Lani are real, separately-accessible Claude Code sessions.
+- **The relay is what gets automated.** Today CTO copy-pastes between panes (`Manager → wt1 terminal`, then `wt1 REPORT → Manager terminal`). Tomorrow Manager does that transmission programmatically. The dispatch *content* is identical — only the carrier changes.
+- **CTO's primary chat is just Manager.** Manager aggregates and summarizes everything across spawned agents. CTO can always drop into any agent pane directly when they want to, but the default UX is "talk only to Manager."
+
+This differs from v1.5.0 because the Electron app *was* the chat interface AND the orchestrator simultaneously — agents were UI rows, never visible terminals. The Warp-fork keeps the pane reality (because Warp is a terminal) and bolts auto-relay on top.
+
+The architectural implication is that Phase 2 needs a **transport bridge**: Phase 1's `meridian_relay` is in-process mpsc; cross-pane delivery requires either a Warp-native pane API, a per-agent file-mailbox, or a per-agent IPC socket. Design discussion in `manager-state.md` under "Project Vision."
+
 ## What's Already in the Fork (Don't Re-Port)
 
 Inherited from Warp + OpenWarp — adapt, don't rebuild:
@@ -150,6 +162,7 @@ Grouped by domain. `[P1]` = phase 1 must-have, `[P2]` = phase 2, `[P3]` = post-c
 - [ ] R1-R9 reliability surface ported
 
 ### Phase 2 — Pipeline & DAG
+- [ ] **Transport bridge** — extend `meridian_relay` so the bus can deliver across panes (Manager pane writes into Builder pane's running Claude Code CLI; ingests REPORTs back). Three candidate designs: Warp-native pane API (most ergonomic, requires being inside the Warp binary), per-agent file-mailbox (`~/.meridian/relay/wt1/{inbox,outbox}.jsonl`, simple + transport-agnostic), per-agent IPC socket (cleanest, requires a small Builder-side wrapper). The bus stays as Phase 1 designed it; a `Transport` trait gets bolted under it with `InProcess` (today) and `WarpPane`/`FileMailbox`/`IpcSocket` (Phase 2) as impls.
 - [ ] Task DAG queue + self-heal
 - [ ] Multi-step pipeline (Manager → Builder → QA loop)
 - [ ] Cost tracking / token budgets / model swap
