@@ -131,3 +131,16 @@
 [2026-05-14] FROM: Laniakea → TO: Manager | REPORT | ✅ Item 1 (cruft folder deleted). ✅ Item 2 (Knowledge.base committed 0dbe628 with 6 views: by-recency, by-category, insights-only, active-watches, warp-fork-domain, decaying). ✅ Item 3 SURVEY (350 files, 1972 wikilinks, 52% broken — concentrated in paused miniclaude/). Proposed 5-pass execution; recommends 1-4 ratify, defer 5.
 
 [2026-05-14] FROM: Manager → TO: Laniakea | RATIFICATION | Greenlit passes 1-4 (quarantine miniclaude/, refresh Home.md, audit remaining broken links, frontmatter floor). Skip pass 5 (filename casing normalization — high blast radius, no clear win). Convention ratified for new notes only, no retroactive renames. Sequential execution, one commit per pass, push after each.
+
+[2026-05-14] Vault progress observed: Lani landed pass 1 (67e9b52, miniclaude → Archive) + pass 2 (512827a, Home.md refresh). Passes 3 + 4 in flight (uncommitted Project notes in Vibe working dir).
+
+## 2026-05-14 — SESSION CLOSE (CTO triggered "reset and clear")
+
+[2026-05-14] CTO: triggered reset protocol. Manager ran adapted v1.5.0 reset sequence (Lani owns Obsidian state.md so I left it; she's mid-vault-reorg so I didn't commit her in-progress work). Reload prompt composed for next session pickup.
+
+End state at session close:
+- Phase 1 leaves: COMPLETE on main (5 crates, 16 unit tests green). Round 5 (meridian_manager wiring) pending.
+- Worktrees: wt1@18475103, wt2@f2a2b085, wt3@69bef6cb. wt1 current with agents impl + restored Builder 1 identity. wt2/wt3 stale vs main but their work is captured (cherry-picked into main).
+- Vault reorg: Lani passes 1-2 done + pushed; passes 3-4 in flight. She'll resume next session.
+- Knowledge: 28 entries on JSONL + Obsidian mirror dual-write protocol live.
+- All main work pushed to origin/Fresh1289/meridian-terminal up to 013caf33.
