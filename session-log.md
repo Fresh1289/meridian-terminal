@@ -144,3 +144,12 @@ End state at session close:
 - Vault reorg: Lani passes 1-2 done + pushed; passes 3-4 in flight. She'll resume next session.
 - Knowledge: 28 entries on JSONL + Obsidian mirror dual-write protocol live.
 - All main work pushed to origin/Fresh1289/meridian-terminal up to 013caf33.
+
+## 2026-05-14 — session restart (post-reset reload)
+
+[2026-05-14] CTO: surfaced gap — Builders don't understand "reset" protocol. Their CLAUDE.md files had ZERO reset/session-close documentation; ritual was a v1.5.0 carry-over that never got ported into Builder identities.
+
+[2026-05-14] Manager: patched all three Builder CLAUDE.md files (wt1@696a6a11, wt2@c011027d, wt3@1350c4a7). Added "Reset Protocol" section (clean tree → state SHA; gates-passing work → atomic commit; failing-gates WIP → labeled stash; no push at reset time, Manager still owns it). Also stripped the "Context: ~XX% | N msgs" line per preference 04. Pushed all three to origin. CTO will reset/reload Builders so they pick up new identity.
+
+[2026-05-14] FROM: Manager → TO: Laniakea | LOG (1 event)
+Builder identity gap caught + fixed: reset/session-close protocol was never ported from v1.5.0 to Builder CLAUDE.md files — CTO had to manually shepherd resets because Builders had no script to follow. Patched all three (wt1@696a6a11, wt2@c011027d, wt3@1350c4a7) with explicit Reset Protocol + stripped the bogus context-% line. This is a second instance of the broader pattern: **workflow rituals that lived in v1.5.0 tribal knowledge keep failing to make it into Warp-fork identity files until friction surfaces them.** Earlier instance: openwarp-ours driver setup (failure 03). Possibly a third confirmation of [pattern 04 / insight 01]-flavored failure mode — "ported workflow assumed without verifying the port actually happened." Suggested category: pattern (workflow-port-gap) or failure (builder-reset-protocol-unported). Suggested domain: warp-fork, agent-identity. Confidence start: 0.5 (two-instance pattern, awaiting Lani's call).
