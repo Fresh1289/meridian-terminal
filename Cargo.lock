@@ -8110,6 +8110,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "meridian_manager"
+version = "0.1.0"
+
+[[package]]
 name = "mermaid_to_svg"
 version = "0.1.0"
 source = "git+https://github.com/warpdotdev/mermaid-to-svg.git?rev=f7233f69965c59760fad98d684c786569814d821#f7233f69965c59760fad98d684c786569814d821"
