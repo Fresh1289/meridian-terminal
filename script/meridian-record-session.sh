@@ -27,3 +27,9 @@ fi
 dir="${HOME}/.meridian/agents/${role}"
 mkdir -p "$dir"
 printf '%s' "$session_id" > "${dir}/session-id"
+
+# Claude Code scopes sessions to the project's cwd — `claude --resume <id>`
+# only finds the session when invoked from the same project dir. Record cwd
+# so meridian-dispatch.sh can CD there before resuming.
+project_dir="${CLAUDE_PROJECT_DIR:-$(pwd)}"
+printf '%s' "$project_dir" > "${dir}/cwd"
