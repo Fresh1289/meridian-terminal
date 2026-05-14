@@ -36,7 +36,9 @@ Per-Builder dispatch format:
 📨 FROM: Manager → TO: Builder N | [TYPE]
 [message]
 ```
-Types: `REQUEST`, `REPORT` (Builder→Mgr), `BLOCKER`, `FYI`, `RESOLUTION`, `LOG` (Mgr→Lani).
+Types: `REQUEST`, `REPORT` (Builder→Mgr), `BLOCKER`, `FYI`, `RESOLUTION`, `LOG` (Mgr→Lani), `CHAT` (routine ack/conversation, no Lani filing), `ACK` (one-line receipt confirmation).
+
+**Filing-suggestion discipline:** `LOG` events to Lani should only embed `Suggested filing: ...` when the event genuinely warrants filing — milestones, novel patterns, security postures, project vision shifts, decision-class events. Routine LOGs (ack a Builder report, log a sync, log a CHAT with Lani) should NOT carry `Suggested filing:`. Lani treats absence of suggestion as "no filing expected unless her own mentat judgment says otherwise." Codified in her CLAUDE.md → "Relay Types" section.
 
 ## Default to v1.5.0 Patterns
 When in doubt about a workflow question, mirror what worked in v1.5.0 Meridian-app development. Adapt only where the Rust/terminal stack genuinely demands. Examples already ported: per-branch CLAUDE.md identity, central session-log.md, atomic commits with [Builder] prefix, specific-file `git add`, Manager owns merges.
