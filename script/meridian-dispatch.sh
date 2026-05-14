@@ -49,4 +49,14 @@ fi
 # `claude --resume <id>` scopes session lookup to the cwd's project — must
 # match where the session was originally created. CD before exec.
 cd "$project_cwd"
-exec claude --resume "$session_id" --print "$text" --output-format json
+
+# `--dangerously-skip-permissions` matches the posture of interactive Builder
+# panes (which CTO enables system-wide). Without it, dispatched turns run
+# with default permissions and can't use Bash/Edit/etc. without prompt-gating,
+# which fails silently in non-interactive `--print` mode. Builder identity +
+# Security Posture in CLAUDE.md still constrain behavior.
+exec claude \
+    --resume "$session_id" \
+    --print "$text" \
+    --output-format json \
+    --dangerously-skip-permissions
