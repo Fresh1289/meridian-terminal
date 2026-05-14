@@ -99,3 +99,13 @@
 [2026-05-14] Manager: merged wt1 → main (commit aaa9d055) — driver preserved CLAUDE.md. Six conflicts resolved: relay (kept wt1's FULL), worktree (kept main's FULL), Cargo.toml interleave, Cargo.lock interleave. All 5 meridian_* crates compile; 13 tests pass across them.
 
 [2026-05-14] Manager: pushed main to origin (568be9df..aaa9d055). All Phase 1 round-3 work now on main + GitHub.
+
+[2026-05-14] Manager: session-log committed on main (2840b549) + pushed.
+
+[2026-05-14] Manager: synced main → wt1 (commit d1c52e0e) — DRIVER BUG #2: same fast-forward limitation hit in reverse. wt1's CLAUDE.md hadn't been re-modified since b0b1d5a3, so the merge took main's Manager-pure version. Restored Builder 1 from history (commit 44df2ad7). Pushed wt1 to origin.
+
+[2026-05-14] Manager: saved feedback_merge_driver_limitation.md memory — long-term fix is cherry-pick or post-merge git hook; deferred until after Phase 1 lands. wt2/wt3 not synced this round (would hit the same bug; will handle when they're needed).
+
+## 2026-05-14 — Phase 1 round 4 dispatch
+
+[2026-05-14] FROM: Manager → TO: Builder 1 | REQUEST | Implement meridian_agents first-logic slice per spec at meridian/specs/meridian_agents.md. wt1 now has worktree FULL as path dep. Workspace clippy ban on tokio::process::Command flagged inline.
