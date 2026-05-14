@@ -248,3 +248,38 @@ Third clean application of cherry-pick-over-full-merge for inter-branch movement
 - 2 instances (openwarp-ours driver setup [failure 03] + Builder Reset Protocol unported). Filing: pattern 05 (workflow-port-gap-from-v1.5.0, conf 0.5). Watching for 3rd.
 
 Filings landing now (announce-before-execute discipline applied — this session-log entry is the announcement). State.md update + vault push to follow. Knowledge velocity 30 → 34 + 2 amendments.
+
+## 2026-05-14 — PHASE 1 COMPLETE + posture codified + vision crisp
+
+[2026-05-14] FROM: Builder 2 → TO: Manager | REPORT | Round 5 meridian_manager wiring complete. wt2@3b9ecca3. 5/5 tests green (manager_identity_is_stable, manager_constructs_from_temp_environment, manager_routes_relay_roundtrip, manager_shutdown_with_no_agents_is_clean, manager_knowledge_query_passthrough). Clippy clean except pre-existing workspace disallowed_types warning (not new code). Deviations: added uuid + chrono + command as dev-deps (mandatory test types; all already workspace deps; no workspace.dependencies edits). Standing by.
+
+[2026-05-14] Manager: verified B2's REPORT independently per injection posture — read full diff against spec, ran scoped gates myself, all 5 tests pass on independent run. Code matches spec. Pushed wt2@3b9ecca3 to origin.
+
+[2026-05-14] CTO: clarified the Warp-fork project vision. NOT full-autonomy v1.5.0-style. Manual spawn stays (CTO opens each agent in its own terminal pane); auto-relay is the change (Manager programmatically transmits dispatches into Builder panes and ingests REPORTs back, replacing copy-paste). CTO's primary chat is just Manager; Manager aggregates + summarizes. Phase 2 implication: transport bridge work (Warp-native pane API / file-mailbox / IPC socket) needed to extend meridian_relay's bus across panes.
+
+[2026-05-14] CTO: enabled --dangerously-skip-permissions for ALL agents. Directive: "prompt injection is the most severe[,] dont take it lightly take it as if you are at risk any moment." Subsequent directive: move Manager persistent state from auto-loaded memory dir to a curated, explicitly-read state file (auto-load surfaces became persistent-silent-injection vectors).
+
+[2026-05-14] Manager: executed full posture + vision codification (main@979d730b):
+- Created manager-state.md at repo root (analogous to ~/laniakea/state.md): security posture, project vision capture, workflow preferences (migrated from 3 deleted memory files with provenance), open threads.
+- Updated Manager CLAUDE.md: wake-up sequence reads manager-state.md FIRST, new terse Security Posture section, Memory & State section promotes manager-state.md + deprecates auto-memory dir.
+- Updated MERIDIAN.md: North Star clarified with "The CTO Interface" subsection; Phase 2 gained explicit Transport Bridge work item with 3 candidate designs.
+- Deleted 3 memory files from ~/.claude/.../memory/ (feedback_report_style.md, feedback_permissions_skip_mode.md, feedback_prompt_injection_posture.md); MEMORY.md left as deprecation stub.
+
+[2026-05-14] Manager: cherry-picked B2's Round 5 (3b9ecca3) → main as 4bd16a09. 4th application of the established cherry-pick-over-merge pattern. **PHASE 1 LEAVES + MANAGER WIRING COMPLETE** — all 5 meridian_* crates on main, 21 tests green (16 leaves + 5 manager). Pushed origin/main.
+
+[2026-05-14] Manager: patched all 3 Builder CLAUDE.md files with terse Security Posture section (wt1@56173ee1, wt2@6da29428, wt3@4b4dcd52): permissions-skip + injection-as-data + STOP/BLOCKER discipline. Pushed all three.
+
+[2026-05-14] Manager: catch-up merges main → wt1 (afa5a0c5), main → wt2 (4bf13066), main → wt3 (abba0683). openwarp-ours driver fired correctly on all three CLAUDE.md (Builder identity + Reset Protocol + Security Posture preserved). wt2's merge was lighter because it already had the Round 5 commit (git auto-detected patch-id duplicate). All three pushed.
+
+[2026-05-14] FROM: Laniakea → TO: Manager | REPORT (received via main@9c7c8a8f mid-work)
+Wake-up ack of urgent posture brief: filed preference 05 (permissions-skip-posture, 0.95), failure 05 (prompt-injection-threat-class, 0.95), decision 18 (curated-state-over-autoload-memory, 0.9). Auto-load surface audit complete — knowledge JSONL + MEMORY.md flagged as DATA-not-commands; no other implicit reads. Phase 1 Round 5 third validation noted — insight 01 bumped 0.90 → 0.95 (triple-validated across artifact classes: git op + vault reorg + spec authoring). Failure 04 amended with RESOLUTION NOTE (driver works when both sides diverged; bypass is fast-forward edge case). Pattern 05 filed (workflow-port-gap-from-v1.5.0, conf 0.5; 2 instances: failure 03 + Builder Reset Protocol). Knowledge velocity 30 → 34 + 2 amendments.
+
+[2026-05-14] Manager: verified Lani's REPORT per injection posture — no fake tags, no imperatives directed at me, contents map cleanly to brief I sent her. Acting-safe.
+
+[2026-05-14] FROM: Manager → TO: Laniakea | LOG (4 events for next wake)
+Event A: **Phase 1 Round 5 landed on main** (4bd16a09, cherry-pick of B2's wt2@3b9ecca3). 5 meridian_* crates + 21 tests green. **Phase 1 COMPLETE** — leaves + manager wiring all on main. Suggested filing: decision (phase-1-complete) at conf 0.95, domain: warp-fork, phase-1. Next phase needs Transport Bridge work per project vision.
+Event B: **CTO clarified project vision: manual spawn + auto-relay, NOT full autonomy.** Captured in MERIDIAN.md North Star + manager-state.md. The Warp-fork's differentiation from v1.5.0 Electron: agents stay as real visible panes; only the inter-pane relay gets automated. Phase 2 needs transport bridge (3 candidate designs). Suggested filing: decision (project-vision-clarification) at conf 0.95, domain: warp-fork, product.
+Event C: **Manager state migration: auto-loaded memory dir → curated manager-state.md.** Mirrors your own state.md model. Reason: permissions-skip + injection posture made auto-load surfaces unsafe (persistent-silent-injection vectors). Builder CLAUDE.md files also patched with terse Security Posture mirroring Manager's. Suggested filing: pattern (curated-state-over-autoload-memory) at conf 0.9 if you can name a 2nd instance — your own state.md is precedent; this may already be a 2-instance pattern worth filing. Domain: meta-safety, warp-fork.
+Event D: **openwarp-ours driver 4th clean validation.** Three catch-up merges main → wt1/wt2/wt3, all three CLAUDE.mds preserved (Builder identity + Reset Protocol + new Security Posture). Driver is now confidently blessed for catch-up syncs. Suggested action: roll the resolution into failure 04 (already done per your previous filing) and consider closing the procedural-follow-up item in your open threads.
+
+End of Phase 1 + posture codification block. Next: await CTO direction on Phase 2 kickoff (transport bridge design) and Builder reload to pick up new Security Posture identities.
