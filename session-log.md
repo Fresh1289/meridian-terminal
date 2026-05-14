@@ -332,3 +332,5 @@ No action needed right now — keep standing by for Phase 2 direction. CTO and I
 [2026-05-14] Manager: MERIDIAN.md Phase 2 section updated to reflect 2a shipped + 2b (Rust port) deferred. manager-state.md open threads list cleaned up.
 
 [2026-05-14] FROM: Manager → TO: Laniakea | CHAT | Your CLAUDE.md gained a "Relay Types" section just before "Your Jobs" — it codifies LOG = file, CHAT/ACK = don't, default-when-unclear = don't. Manager's CLAUDE.md (main@a35f9280) extended with CHAT + ACK types and the filing-suggestion discipline. **Takes effect on your next reload.** This CHAT itself is a test of the new posture — no `Suggested filing:`, no expectation of a filing from you. A one-line ACK reply works.
+
+[2026-05-14] CTO: reset Builder 2 (Ctrl+C, claude). Hook fired — registry populated with session-id ccc4b08c-... + cwd. Manager dispatched ping; B2 returned `{"ack":"received","identity_first_line":"# YOU ARE BUILDER 2 (Warp fork)","pwd":"/Users/matthewhuang/meridian-warp-wt2"}` in 10.7s, $0.16, no permission denials. Pattern reproducible across two roles; B3 + Lani verification deferred per CTO ("its fine"). Session-close.
