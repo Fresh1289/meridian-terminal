@@ -5,5 +5,14 @@ version = "0.1.0"
 edition = "2024"
 publish.workspace = true
 license.workspace = true
+description = "Meridian relay bus — atomic Manager↔Builder messaging with approval gates"
 
 [dependencies]
+chrono = { workspace = true }
+serde = { workspace = true }
+thiserror = { workspace = true }
+tokio = { workspace = true, features = ["macros", "rt", "sync"] }
+uuid = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["macros", "rt", "sync", "time"] }
