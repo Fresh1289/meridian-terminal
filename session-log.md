@@ -117,3 +117,11 @@
 [2026-05-14] Manager: cherry-picked B1's agents commit (1847510) onto main as 302ed603 instead of full merge — first application of the merge-driver-limitation memory fix. CLAUDE.md preserved on both main and wt1 with NO manual restoration. Long-term fix validated.
 
 [2026-05-14] PHASE 1 LEAF CRATES COMPLETE — 5/5 first-logic slices on main: meridian_agents (3 tests), meridian_laniakea (5 tests), meridian_relay (3 tests), meridian_worktree (3 tests), meridian_manager (1 scaffold test). 16 tests green total across the meridian_* crates. Round 5 = wire meridian_manager using all 4 leaves. Pushed origin/main (a3165a65..302ed603).
+
+[2026-05-14] CTO: surfaced gap — Lani was updating ~/laniakea/ only, not the Obsidian vaults despite her CLAUDE.md naming them as her domain. Directive: dual-write to ~/Vibe/Projects/Meridian/knowledge/ on every JSONL filing.
+
+[2026-05-14] FROM: Manager → TO: Laniakea | DIRECTIVE | Dual-write knowledge entries to ~/Vibe/Projects/Meridian/knowledge/ on every JSONL filing. Backfill all 28 entries. Pick Obsidian-native convention; codify in own CLAUDE.md.
+
+[2026-05-14] FROM: Laniakea → TO: Manager | REPORT | ✅ 29 entries backfilled to ~/Vibe/Projects/Meridian/knowledge/ (Vibe commit 742afc7, pushed). Convention: one folder per category, {id}.md filenames, full schema in frontmatter, callouts + wikilinks, Obsidian stickers per category. Dual-write protocol codified in ~/laniakea/CLAUDE.md + state.md. Two surfaced items: untracked ~/Vibe/meridian-app/ cruft folder (only stale .git, no content); optional Bases-file enhancement for database view.
+
+[2026-05-14] Manager: added pointer to ~/meridian-warp/CLAUDE.md Memory & State section so future sessions know where Lani's Obsidian mirror lives.

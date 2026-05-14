@@ -84,7 +84,8 @@ Laniakea has no auto-tap on inter-agent traffic. Manager must explicitly CC her 
 
 ## Memory & State
 - `~/laniakea/state.md` — canonical Warp-fork state, owned by Laniakea
-- `~/laniakea/knowledge/*.jsonl` — long-term knowledge stores
+- `~/laniakea/knowledge/*.jsonl` — long-term knowledge stores (machine-readable contract for the future in-binary `meridian_laniakea` Rust crate)
+- `~/Vibe/Projects/Meridian/knowledge/` — Laniakea's Obsidian mirror of the JSONL stores; one folder per category (decisions/patterns/failures/preferences/insights), one note per entry, dual-write on every filing. Convention details in `~/laniakea/CLAUDE.md` Knowledge Store section.
 - `~/.claude/projects/-Users-matthewhuang-meridian/memory/` — Manager's per-session memories (auto-loaded)
 - v1.5.0 archive: `~/meridian/` and `~/meridian-wt{1,2,3,6}` — frozen, do not touch unless told
 
