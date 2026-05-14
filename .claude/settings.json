@@ -13,5 +13,17 @@
       "Bash(git branch *)",
       "Bash(git fetch *)"
     ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "script/meridian-record-session.sh builder-3"
+          }
+        ]
+      }
+    ]
   }
 }
