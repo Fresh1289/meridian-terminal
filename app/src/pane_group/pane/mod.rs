@@ -21,6 +21,7 @@ pub(super) mod get_started_pane;
 pub(super) mod get_started_view;
 #[cfg(not(target_family = "wasm"))]
 pub(super) mod local_harness_launch;
+pub(super) mod meridian_agent_pane;
 pub(super) mod network_log_pane;
 pub(super) mod notebook_pane;
 pub(super) mod settings_pane;
@@ -152,6 +153,7 @@ pub(crate) enum IPaneType {
     NetworkLog,
     SshServer,
     Welcome,
+    MeridianAgent,
     DeferredPlaceholder,
     /// A pane type only for tests.
     #[cfg(test)]
@@ -177,6 +179,7 @@ impl Display for IPaneType {
             IPaneType::NetworkLog => write!(f, "Network Log"),
             IPaneType::SshServer => write!(f, "SSH Server"),
             IPaneType::Welcome => write!(f, "Welcome"),
+            IPaneType::MeridianAgent => write!(f, "Meridian Agent"),
             IPaneType::DeferredPlaceholder => write!(f, "Placeholder"),
             #[cfg(test)]
             IPaneType::Dummy => write!(f, "Dummy"),
@@ -267,6 +270,20 @@ impl PaneId {
 
     pub fn from_welcome_pane_ctx(ctx: &ViewContext<PaneView<WelcomeView>>) -> Self {
         Self::new_from_ctx(IPaneType::Welcome, ctx)
+    }
+
+    /// Creates a [`PaneId`] from a [`ViewContext<PaneView<MeridianAgentView>>`].
+    pub fn from_meridian_agent_pane_ctx(
+        ctx: &ViewContext<PaneView<meridian_agent_pane::MeridianAgentView>>,
+    ) -> Self {
+        Self::new_from_ctx(IPaneType::MeridianAgent, ctx)
+    }
+
+    /// Creates a [`PaneId`] from a [`PaneView<MeridianAgentView>`] entity ID.
+    pub fn from_meridian_agent_pane_view(
+        meridian_agent_pane_view: &ViewHandle<PaneView<meridian_agent_pane::MeridianAgentView>>,
+    ) -> Self {
+        Self::new(IPaneType::MeridianAgent, meridian_agent_pane_view)
     }
 
     pub fn from_get_started_pane_ctx(ctx: &ViewContext<PaneView<GetStartedView>>) -> Self {
@@ -509,6 +526,12 @@ impl PaneId {
             }
             IPaneType::Welcome => {
                 ChildView::<PaneView<WelcomeView>>::with_id(self.0.pane_view_id).finish()
+            }
+            IPaneType::MeridianAgent => {
+                ChildView::<PaneView<meridian_agent_pane::MeridianAgentView>>::with_id(
+                    self.0.pane_view_id,
+                )
+                .finish()
             }
             IPaneType::DeferredPlaceholder => warpui::elements::Empty::new().finish(),
             #[cfg(test)]

@@ -1892,6 +1892,14 @@ impl PaneGroup {
                     "Environment management panes are not restored"
                 ))
             }
+            LeafContents::MeridianAgent { .. } => {
+                // MeridianAgent panes are intentionally not restored — they're
+                // opened on-demand via the agent launcher action. Reaching this
+                // arm would mean `is_persisted` returned true erroneously.
+                Err(anyhow::anyhow!(
+                    "MeridianAgent panes are not restored from persistence"
+                ))
+            }
         };
 
         if let (Ok((pane_data, _)), Some(title)) = (&result, custom_vertical_tabs_title.as_deref())
@@ -2238,6 +2246,25 @@ impl PaneGroup {
             AIDocumentPaneVisibilityAction::Open,
             ctx,
         );
+    }
+
+    /// Open a new [`MeridianAgentPane`] split to the right of the active pane,
+    /// rendering the read-only transcript at `jsonl_path` for the agent named
+    /// `role`. Foundation for the Phase 3b orchestration UI; the launcher
+    /// action and live refresh land in 3b-D / 3b-B.
+    pub fn open_meridian_agent_pane(
+        &mut self,
+        role: String,
+        session_uuid: uuid::Uuid,
+        jsonl_path: std::path::PathBuf,
+        ctx: &mut ViewContext<Self>,
+    ) {
+        if self.is_focused_pane_maximized(ctx) {
+            self.toggle_maximize_pane(ctx);
+        }
+        let pane =
+            pane::meridian_agent_pane::MeridianAgentPane::new(role, session_uuid, jsonl_path, ctx);
+        self.add_pane_with_direction(Direction::Right, pane, true, ctx);
     }
 
     pub fn close_all_ai_document_panes(&mut self, ctx: &mut ViewContext<Self>) {

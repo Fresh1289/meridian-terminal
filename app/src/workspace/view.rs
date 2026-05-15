@@ -10151,6 +10151,62 @@ impl Workspace {
         ctx.notify();
     }
 
+    /// Phase 3b-A debug entry: open a `MeridianAgent` pane for the role named
+    /// by the `MERIDIAN_DEBUG_OPEN_AGENT_ROLE` env var (default `"builder-1"`),
+    /// resolving session id + cwd from `~/.meridian/agents/<role>/`. Logs and
+    /// returns silently on any lookup failure — this surface is replaced by the
+    /// launcher action in 3b-D.
+    #[cfg(debug_assertions)]
+    fn open_meridian_agent_debug(&mut self, ctx: &mut ViewContext<Self>) {
+        use crate::ai::agent_sdk::driver::harness::claude_transcript::encode_cwd;
+        let role = std::env::var("MERIDIAN_DEBUG_OPEN_AGENT_ROLE")
+            .unwrap_or_else(|_| "builder-1".to_string());
+        let Some(home) = dirs::home_dir() else {
+            log::warn!("[meridian-debug] home directory unavailable; cannot open agent pane");
+            return;
+        };
+        let registry = home.join(".meridian/agents").join(&role);
+        let session_id = match std::fs::read_to_string(registry.join("session-id")) {
+            Ok(s) => s.trim().to_string(),
+            Err(e) => {
+                log::warn!(
+                    "[meridian-debug] failed to read {}/session-id: {e}",
+                    registry.display()
+                );
+                return;
+            }
+        };
+        let cwd = match std::fs::read_to_string(registry.join("cwd")) {
+            Ok(s) => s.trim().to_string(),
+            Err(e) => {
+                log::warn!(
+                    "[meridian-debug] failed to read {}/cwd: {e}",
+                    registry.display()
+                );
+                return;
+            }
+        };
+        let session_uuid = match uuid::Uuid::parse_str(&session_id) {
+            Ok(u) => u,
+            Err(e) => {
+                log::warn!("[meridian-debug] invalid session UUID `{session_id}`: {e}");
+                return;
+            }
+        };
+        let encoded = encode_cwd(std::path::Path::new(&cwd));
+        let jsonl_path = home
+            .join(".claude/projects")
+            .join(&encoded)
+            .join(format!("{session_uuid}.jsonl"));
+        log::info!(
+            "[meridian-debug] opening agent pane for role={role} session={session_uuid} jsonl={}",
+            jsonl_path.display()
+        );
+        self.active_tab_pane_group().update(ctx, |pane_group, ctx| {
+            pane_group.open_meridian_agent_pane(role, session_uuid, jsonl_path, ctx);
+        });
+    }
+
     fn add_docker_sandbox_tab(&mut self, ctx: &mut ViewContext<Self>) {
         if !FeatureFlag::LocalDockerSandbox.is_enabled() {
             log::warn!("Local docker sandbox feature flag is disabled");
@@ -19836,6 +19892,10 @@ impl TypedActionView for Workspace {
             OpenViewTreeDebugWindow => {
                 let window_id = ctx.window_id();
                 ctx.open_view_tree_debug_window(window_id);
+            }
+            #[cfg(debug_assertions)]
+            OpenMeridianAgentDebug => {
+                self.open_meridian_agent_debug(ctx);
             }
             ToggleSyncAllTerminalInputsInAllTabs => {
                 let enabled = SyncedInputState::handle(ctx).update(ctx, |status, _| {

@@ -251,6 +251,17 @@ pub fn init(app: &mut AppContext) {
                     WorkspaceAction::ShowHoaOnboardingFlow,
                 )
                 .with_context_predicate(id!("Workspace")),
+                // Phase 3b-A debug: open a MeridianAgent pane for the role
+                // named by `MERIDIAN_DEBUG_OPEN_AGENT_ROLE` (default
+                // `builder-1`), reading session id + cwd from
+                // `~/.meridian/agents/<role>/`. Replaced by the launcher
+                // action in 3b-D.
+                EditableBinding::new(
+                    "workspace:open_meridian_agent_debug",
+                    "Meridian: Open Agent Pane (debug)",
+                    WorkspaceAction::OpenMeridianAgentDebug,
+                )
+                .with_context_predicate(id!("Workspace")),
             ]);
         }
     }

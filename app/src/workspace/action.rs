@@ -297,6 +297,13 @@ pub enum WorkspaceAction {
     ClickedAIAssistantWarmWelcome,
     /// An action to open a new window with a view hierarchy debugger.
     OpenViewTreeDebugWindow,
+    /// Debug action: open a [`MeridianAgentPane`] for the role named by the
+    /// `MERIDIAN_DEBUG_OPEN_AGENT_ROLE` env var (default `"builder-1"`),
+    /// resolving session UUID + cwd from
+    /// `~/.meridian/agents/<role>/{session-id,cwd}`. Used to verify the pane
+    /// renders before the launcher (3b-D) lands.
+    #[cfg(debug_assertions)]
+    OpenMeridianAgentDebug,
     DismissAIAssistantWarmWelcome,
     /// An action to either upgrade syncing status from none or just in one tab
     /// to syncing all tabs, or downgrade from syncing all tabs to no syncing
@@ -930,7 +937,8 @@ impl WorkspaceAction {
             | OpenOpenWarpLaunchModal
             | ResetOpenWarpLaunchModalState
             | InstallOpenCodeWarpPlugin
-            | UseLocalOpenCodeWarpPlugin => false,
+            | UseLocalOpenCodeWarpPlugin
+            | OpenMeridianAgentDebug => false,
             #[cfg(not(target_family = "wasm"))]
             ViewLogs => false,
             #[cfg(target_os = "macos")]

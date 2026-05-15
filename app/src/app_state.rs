@@ -145,6 +145,15 @@ pub enum LeafContents {
     SshServer {
         node_id: String,
     },
+    /// Read-only display of an existing Claude Code session JSONL. The pane
+    /// loads the transcript at `jsonl_path` and renders it as a chat-style
+    /// conversation. Not persisted across restarts in this iteration —
+    /// users reopen via the agent launcher (3b-D).
+    MeridianAgent {
+        role: String,
+        session_uuid: uuid::Uuid,
+        jsonl_path: PathBuf,
+    },
 }
 
 #[cfg(feature = "local_fs")]
@@ -169,7 +178,11 @@ impl LeafContents {
             | LeafContents::EnvironmentManagement(_)
             // SSH server editor:数据(host/user/...)持久化在 ssh_servers 表里,
             // pane 本身只是 view,关掉再打开没差别。
-            | LeafContents::SshServer { .. } => false,
+            | LeafContents::SshServer { .. }
+            // MeridianAgent: read-only JSONL viewer. Persistence requires a
+            // new SQLite schema and isn't needed for the 3b-A read-only
+            // round; users reopen via the launcher action (3b-D).
+            | LeafContents::MeridianAgent { .. } => false,
             LeafContents::Terminal(_)
             | LeafContents::Notebook(_)
             | LeafContents::AIDocument(_)
