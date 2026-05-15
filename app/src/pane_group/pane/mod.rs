@@ -77,6 +77,7 @@ pub(super) fn init(app: &mut AppContext) {
     self::view::init(app);
     welcome_view::init(app);
     get_started_view::init(app);
+    meridian_agent_pane::init(app);
 }
 
 /// The opaque identifier for an arbitrary pane. Consumers
