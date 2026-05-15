@@ -50,13 +50,44 @@ fi
 # match where the session was originally created. CD before exec.
 cd "$project_cwd"
 
+# Unified relay log: every dispatch + response appended here so a single
+# watcher (`meridian-watch.sh relays`) can show the full orchestration
+# timeline across all agents.
+log_file="${HOME}/.meridian/relay-log.jsonl"
+mkdir -p "$(dirname "$log_file")"
+ts_start="$(date -u +%Y-%m-%dT%H:%M:%S.%NZ 2>/dev/null || date -u +%Y-%m-%dT%H:%M:%SZ)"
+printf '{"event":"dispatch","time":"%s","role":"%s","session_id":"%s","text":%s}\n' \
+    "$ts_start" "$role" "$session_id" "$(printf '%s' "$text" | jq -Rs .)" >> "$log_file"
+
 # `--dangerously-skip-permissions` matches the posture of interactive Builder
 # panes (which CTO enables system-wide). Without it, dispatched turns run
 # with default permissions and can't use Bash/Edit/etc. without prompt-gating,
 # which fails silently in non-interactive `--print` mode. Builder identity +
 # Security Posture in CLAUDE.md still constrain behavior.
-exec claude \
-    --resume "$session_id" \
-    --print "$text" \
-    --output-format json \
-    --dangerously-skip-permissions
+#
+# Capture (not exec) so we can log the response too. Forward exit code.
+set +e
+response="$(claude --resume "$session_id" --print "$text" --output-format json --dangerously-skip-permissions)"
+exit_code=$?
+set -e
+
+ts_end="$(date -u +%Y-%m-%dT%H:%M:%S.%NZ 2>/dev/null || date -u +%Y-%m-%dT%H:%M:%SZ)"
+# `--arg/--argjson` lets jq inject the raw response object as a sub-field;
+# falls back to a string envelope if response isn't valid JSON (e.g. claude error).
+if printf '%s' "$response" | jq empty 2>/dev/null; then
+    jq -nc \
+        --arg time "$ts_end" --arg role "$role" --argjson exit_code "$exit_code" \
+        --argjson response "$response" \
+        '{event: "response", time: $time, role: $role, exit_code: $exit_code, response: $response}' \
+        >> "$log_file"
+else
+    jq -nc \
+        --arg time "$ts_end" --arg role "$role" --argjson exit_code "$exit_code" \
+        --arg raw "$response" \
+        '{event: "response", time: $time, role: $role, exit_code: $exit_code, raw_stdout: $raw}' \
+        >> "$log_file"
+fi
+
+# Forward response to caller (preserves the existing dispatch contract).
+printf '%s' "$response"
+exit "$exit_code"

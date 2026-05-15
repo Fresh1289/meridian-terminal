@@ -275,6 +275,9 @@ impl Entity for AppearanceManager {
 impl SingletonEntity for AppearanceManager {}
 
 fn load_default_monospace_font_family(ctx: &mut AppContext) -> anyhow::Result<FamilyId> {
+    // Hack remains the default monospace family for the terminal grid. Open Sauce Sans
+    // and Open Sauce One are preloaded alongside as opt-in switchable families for the
+    // Hyperdrive brand (selected per-pane via settings).
     warpui::fonts::Cache::handle(ctx).update(ctx, |font_cache, _| {
         let default_monospace_font_family = font_cache.load_family_from_bytes(
             "Hack",
@@ -285,6 +288,30 @@ fn load_default_monospace_font_family(ctx: &mut AppContext) -> anyhow::Result<Fa
                 ASSETS
                     .get("bundled/fonts/hack/Hack-BoldItalic.ttf")?
                     .to_vec(),
+            ],
+        )?;
+        let _opensauce_sans = font_cache.load_family_from_bytes(
+            "Open Sauce Sans",
+            vec![
+                ASSETS
+                    .get("bundled/fonts/OpenSauceSans-Regular.ttf")?
+                    .to_vec(),
+                ASSETS
+                    .get("bundled/fonts/OpenSauceSans-Medium.ttf")?
+                    .to_vec(),
+                ASSETS
+                    .get("bundled/fonts/OpenSauceSans-SemiBold.ttf")?
+                    .to_vec(),
+                ASSETS.get("bundled/fonts/OpenSauceSans-Bold.ttf")?.to_vec(),
+            ],
+        )?;
+        let _opensauce_one = font_cache.load_family_from_bytes(
+            "Open Sauce One",
+            vec![
+                ASSETS
+                    .get("bundled/fonts/OpenSauceOne-SemiBold.ttf")?
+                    .to_vec(),
+                ASSETS.get("bundled/fonts/OpenSauceOne-Bold.ttf")?.to_vec(),
             ],
         )?;
         let default_monospace_font =
@@ -303,7 +330,9 @@ fn load_default_monospace_font_family(ctx: &mut AppContext) -> anyhow::Result<Fa
 
 fn load_default_ui_font_family(ctx: &mut AppContext) -> anyhow::Result<FamilyId> {
     warpui::fonts::Cache::handle(ctx).update(ctx, |font_cache, _| {
-        let roboto = font_cache.load_family_from_bytes(
+        // Roboto is preloaded as a switchable UI option but Hyperdrive defaults to
+        // Open Sauce Sans for the UI font as well (matches the terminal text font).
+        let _roboto = font_cache.load_family_from_bytes(
             "Roboto",
             vec![
                 ASSETS
@@ -334,7 +363,10 @@ fn load_default_ui_font_family(ctx: &mut AppContext) -> anyhow::Result<FamilyId>
             return Ok(font_family_id);
         }
 
-        roboto
+        if let Some(family_id) = font_cache.family_id_for_name("Open Sauce Sans") {
+            return Ok(family_id);
+        }
+        _roboto
     })
 }
 

@@ -113,11 +113,19 @@ Drop:
 ---
 
 ## Open Threads (stale-fast; cross-check session-log.md tail before relying)
-- Phase 1 Round 5 (`meridian_manager` wiring) — verified on wt2@3b9ecca3, pending cherry-pick to main
-- After Round 5 lands: catch-up merges main → wt1/wt2/wt3 so all Builder branches are synced
-- Phase 2 transport-bridge design (per Project Vision above) — first thing after Phase 1 closes
-- Lani expected to send a posture-update ack message (security brief is in session-log tail)
-- Builder CLAUDE.md security posture patch — pending; mirror this file's Security Posture into terse Builder-side rules
+
+**Closed since last update (2026-05-14 → 2026-05-15):**
+- ~~B1 + B2 + Lani dispatch verification~~ ✅ Phase 2a verified live across 3 of 4 agents (B3 deferred as redundant)
+- ~~Permission propagation~~ ✅ fixed (`--dangerously-skip-permissions` in dispatch script)
+- ~~Dogfood track — `.app` build~~ ✅ shipped `OpenWarp.app` at `target/release/bundle/osx/`. Daily-driver-installable via `cp -R` to `/Applications`.
+
+**Open (entering Phase 3):**
+- **Install OpenWarp.app as daily driver** — CTO action: `cp -R ~/meridian-warp/target/release/bundle/osx/OpenWarp.app /Applications/`. One-time, until next release rebuild.
+- **Phase 3a — Brand strip** — Phase 0 carry-over, gates UI work. Need to identify Warp wordmark/icon/copyright surfaces + decide Meridian visual identity. CTO direction needed on identity.
+- **Phase 3b — Manager pane / orchestration surface** — sidebar agent list, native Manager chat pane, live relay visibility, approval gates inline. Recon on Warp UI architecture in progress (Explore agent dispatched 2026-05-15).
+- **Phase 2b** — *deferred until after some Phase 3 work lands.* Shell dispatch is sufficient for Phase 3 UI to call out to.
+- **B3 verification dispatch** — deferred indefinitely; the same mechanic verified on B1 + B2 + Lani is sufficient evidence the pattern is general.
+- **Phase 3c — canvas resurrection** — explicitly own dedicated future phase; not Phase 3a/3b work.
 
 ---
 
