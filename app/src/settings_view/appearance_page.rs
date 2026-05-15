@@ -2115,7 +2115,7 @@ impl AppearanceSettingsPageView {
             })
             .collect();
 
-        // Surface the default font (Open Sauce Sans) and bundled Hack in the dropdown
+        // Surface the default monospace (Hack) and bundled Open Sauce Sans in the dropdown
         // so the user can pick either without typing the name manually.
         if let Some(family_id) = ctx
             .font_cache()
@@ -2123,12 +2123,14 @@ impl AppearanceSettingsPageView {
         {
             self.available_families.insert(
                 String::from(DEFAULT_MONOSPACE_FONT_NAME),
-                (Some(family_id), FontType::Any),
+                (Some(family_id), FontType::Monospace),
             );
         }
-        if let Some(family_id) = ctx.font_cache().family_id_for_name("Hack") {
-            self.available_families
-                .insert(String::from("Hack"), (Some(family_id), FontType::Monospace));
+        if let Some(family_id) = ctx.font_cache().family_id_for_name("Open Sauce Sans") {
+            self.available_families.insert(
+                String::from("Open Sauce Sans"),
+                (Some(family_id), FontType::Any),
+            );
         }
 
         self.update_font_dropdown(ctx);
