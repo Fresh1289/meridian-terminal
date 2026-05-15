@@ -2115,15 +2115,20 @@ impl AppearanceSettingsPageView {
             })
             .collect();
 
-        // Add Hack font to the available monospace families so user could switch back to it.
+        // Surface the default font (Open Sauce Sans) and bundled Hack in the dropdown
+        // so the user can pick either without typing the name manually.
         if let Some(family_id) = ctx
             .font_cache()
             .family_id_for_name(DEFAULT_MONOSPACE_FONT_NAME)
         {
             self.available_families.insert(
                 String::from(DEFAULT_MONOSPACE_FONT_NAME),
-                (Some(family_id), FontType::Monospace),
+                (Some(family_id), FontType::Any),
             );
+        }
+        if let Some(family_id) = ctx.font_cache().family_id_for_name("Hack") {
+            self.available_families
+                .insert(String::from("Hack"), (Some(family_id), FontType::Monospace));
         }
 
         self.update_font_dropdown(ctx);

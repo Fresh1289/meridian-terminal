@@ -275,8 +275,11 @@ impl Entity for AppearanceManager {
 impl SingletonEntity for AppearanceManager {}
 
 fn load_default_monospace_font_family(ctx: &mut AppContext) -> anyhow::Result<FamilyId> {
+    // Hyperdrive: the default "terminal text" font is Open Sauce Sans (the v1.5.0 Meridian
+    // brand font), intentionally non-monospace. Hack is preloaded alongside so users can
+    // switch back to a true monospace per-pane via settings.
     warpui::fonts::Cache::handle(ctx).update(ctx, |font_cache, _| {
-        let default_monospace_font_family = font_cache.load_family_from_bytes(
+        let _hack = font_cache.load_family_from_bytes(
             "Hack",
             vec![
                 ASSETS.get("bundled/fonts/hack/Hack-Italic.ttf")?.to_vec(),
@@ -287,23 +290,48 @@ fn load_default_monospace_font_family(ctx: &mut AppContext) -> anyhow::Result<Fa
                     .to_vec(),
             ],
         )?;
-        let default_monospace_font =
-            font_cache.select_font(default_monospace_font_family, Default::default());
+        let default_font_family = font_cache.load_family_from_bytes(
+            "Open Sauce Sans",
+            vec![
+                ASSETS
+                    .get("bundled/fonts/OpenSauceSans-Regular.ttf")?
+                    .to_vec(),
+                ASSETS
+                    .get("bundled/fonts/OpenSauceSans-Medium.ttf")?
+                    .to_vec(),
+                ASSETS
+                    .get("bundled/fonts/OpenSauceSans-SemiBold.ttf")?
+                    .to_vec(),
+                ASSETS.get("bundled/fonts/OpenSauceSans-Bold.ttf")?.to_vec(),
+            ],
+        )?;
+        let _opensauce_one = font_cache.load_family_from_bytes(
+            "Open Sauce One",
+            vec![
+                ASSETS
+                    .get("bundled/fonts/OpenSauceOne-SemiBold.ttf")?
+                    .to_vec(),
+                ASSETS.get("bundled/fonts/OpenSauceOne-Bold.ttf")?.to_vec(),
+            ],
+        )?;
+        let default_font = font_cache.select_font(default_font_family, Default::default());
         font_cache.glyph_typographic_bounds(
-            default_monospace_font,
+            default_font,
             MonospaceFontSize::default_value(),
             font_cache
-                .glyph_for_char(default_monospace_font, 'm', false)
-                .ok_or_else(|| anyhow!("monospace font has no 'm' glyph"))?
+                .glyph_for_char(default_font, 'm', false)
+                .ok_or_else(|| anyhow!("default font has no 'm' glyph"))?
                 .0,
         )?;
-        Ok(default_monospace_font_family)
+        Ok(default_font_family)
     })
 }
 
 fn load_default_ui_font_family(ctx: &mut AppContext) -> anyhow::Result<FamilyId> {
     warpui::fonts::Cache::handle(ctx).update(ctx, |font_cache, _| {
-        let roboto = font_cache.load_family_from_bytes(
+        // Roboto is preloaded as a switchable UI option but Hyperdrive defaults to
+        // Open Sauce Sans for the UI font as well (matches the terminal text font).
+        let _roboto = font_cache.load_family_from_bytes(
             "Roboto",
             vec![
                 ASSETS
@@ -334,7 +362,10 @@ fn load_default_ui_font_family(ctx: &mut AppContext) -> anyhow::Result<FamilyId>
             return Ok(font_family_id);
         }
 
-        roboto
+        if let Some(family_id) = font_cache.family_id_for_name("Open Sauce Sans") {
+            return Ok(family_id);
+        }
+        _roboto
     })
 }
 
