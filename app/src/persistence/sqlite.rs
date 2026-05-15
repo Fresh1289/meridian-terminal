@@ -1172,7 +1172,8 @@ fn save_pane_state(
         LeafContents::AIDocument(_) => AI_DOCUMENT_PANE_KIND,
         LeafContents::EnvironmentManagement(_)
         | LeafContents::NetworkLog
-        | LeafContents::SshServer { .. } => {
+        | LeafContents::SshServer { .. }
+        | LeafContents::MeridianAgent { .. } => {
             // These pane types are filtered out before this function is
             // called; see `LeafContents::is_persisted` and the skip in
             // `save_app_state`. Reaching this arm would mean a `pane_nodes`
@@ -1415,6 +1416,9 @@ fn save_pane_state(
             // Unreachable: filtered by `is_persisted` in `save_app_state`.
         }
         LeafContents::SshServer { .. } => {
+            // Unreachable: filtered by `is_persisted` in `save_app_state`.
+        }
+        LeafContents::MeridianAgent { .. } => {
             // Unreachable: filtered by `is_persisted` in `save_app_state`.
         }
     }

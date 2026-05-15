@@ -3245,6 +3245,7 @@ impl PaneGroup {
             | IPaneType::NetworkLog
             | IPaneType::SshServer
             | IPaneType::Welcome
+            | IPaneType::MeridianAgent
             | IPaneType::DeferredPlaceholder => TypedPane::Other,
             #[cfg(test)]
             IPaneType::Dummy => TypedPane::Other,
