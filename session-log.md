@@ -360,3 +360,48 @@ Recon agent (Explore subagent) mapped the fork's UI architecture: wgpu+winit, pa
 Suggested filing: decision (`phase-3-scope-defined-with-plug-points`, conf 0.9, NORTH STAR), domain: warp-fork, phase-3, ui.
 
 No urgency on filings — these are decision-class events you can file when next active. The audit trail is complete in main@<this commit>.
+
+## 2026-05-15 — SESSION CLOSE (Phase 3a + 3b shipped, CTO taking a rest)
+
+[2026-05-15] Manager: massive multi-phase session. Summary of what landed:
+
+**Phase 3a (brand + visual identity):**
+- Hyperdrive bundle identity (CFBundleName/DisplayName/Identifier) on main + Open Sauce Sans fonts ported from v1.5.0 (6 .ttf files, all preloaded). All-black theme already default — got lucky. B1 dispatch 7071222f → cherry-picked to main; ~$4.75.
+- Default monospace font reverted to Hack after CTO confirmed proportional terminal renders weird (terminal grid + proportional font = inter-char spacing). UI chrome stays Open Sauce Sans; terminal text stays mono. B1 revert 6750ddce → main; ~$1.90.
+- Release Hyperdrive.app built + bundled cleanly (target/release/bundle/osx/Hyperdrive.app).
+
+**Phase 2a auxiliary (script-based "visible relay" interim):**
+- meridian-dispatch.sh now logs every dispatch + response to ~/.meridian/relay-log.jsonl
+- meridian-watch.sh gains "relays" pseudo-role for unified all-agents timeline + per-agent live tail (jq-formatted: 🟦 user / 🟩 assistant / 🛠 tool / ✅ result)
+- meridian-spawn.sh + meridian-spawn-all.sh for headless agent session creation
+- Manager-side SessionStart hook added so Manager registers itself on next reset
+
+**Phase 3b (real orchestration UI):**
+- 3b-A (B2 dispatch 0340f1e0, ~$16.11, 199 turns): new MeridianAgent pane type. Read-only chat-style view of any Claude Code session JSONL. Architecture: local-only parser (MeridianAgentTranscript with TurnBlock = Text/ToolUse/ToolResult), NOT routed through Warp's server-synced AIConversation. Pane mirrors welcome_pane.rs pattern. Debug entry behind cfg(debug_assertions) — only available in debug builds (need to remove gate for release access).
+- 3b-B + 3b-E combined (B2 dispatch 60852ca4, ~$22.26, 143 turns, 5 features): live refresh via notify-debouncer-full → futures::mpsc → ctx.spawn_stream_local (cleanly composed; no bridge needed). Text selection + Cmd+C copy + scroll. Markdown rendering via existing markdown_parser crate (no new dep). Visual differentiation (You/Assistant/tool_use/tool_result with distinct styling). Long tool_results folded to first 3 lines + "(truncated, full result NN lines)" marker.
+- CTO tested the polished pane in Hyperdrive — chat view renders correctly with markdown + folded tool_results + role-prefixed headers. App is laggy because we're forced onto debug build (cfg(debug_assertions) gate); release build would be 5-50x faster but lacks the debug-open command. **Top of next-session queue: remove cfg gate, rebuild release, smooth perf.**
+
+**Other:**
+- 4 cleaner cherry-pick-over-merge applications (Phase 3a-1 → main, Phase 3a-1 revert → main, Phase 3b-A → main, Phase 3b polish → main) — insight 01's cherry-pick antidote now validated across many rounds. Could retire failure 04 from open threads.
+- 3 catch-up merges main → wt1/wt2/wt3 — driver fired cleanly on all CLAUDE.md surfaces.
+- One small merge conflict on wt2's .claude/settings.json (manager hook vs builder-2 hook) — resolved with --ours, rerere recorded.
+- Total session cost (rough): ~$50-60 across all Builder dispatches + recons. Within Claude Max 20x budget per CTO.
+
+[2026-05-15] Reset Protocol dispatched to all 4 agents in parallel via script. All acked clean:
+- B1: wt1@6750ddce clean
+- B2: wt2@60852ca4 clean
+- B3: wt3@1231395e clean (idle since Phase 2a)
+- Lani: session-close ack, vault "dirty" (only Obsidian workspace cruft per her CLAUDE.md classification — `.makemd/` + `.obsidian/workspace.json`; no content changes lost)
+
+[2026-05-15] FROM: Manager → TO: Laniakea | LOG (deferred filing — read on next wake)
+
+Milestones from today worth filing when you're back:
+1. **Phase 3a-1 visual identity locked** — Hyperdrive bundle identity + Open Sauce Sans fonts ported + all-black default. Terminal-font experiment reverted (proportional fonts incompatible with terminal grid model — useful failure to file). Suggested filing: decision (`phase-3a-1-brand-metadata-and-font-port-complete`, conf 0.9, MILESTONE) + failure (`proportional-font-in-terminal-grid-renders-with-inter-char-spacing`, conf 0.95).
+2. **Phase 3b-A foundation** — MeridianAgent pane type shipped; first non-terminal pane in Hyperdrive that renders Claude Code sessions as chat. Architecture: local-only parser, NOT routed through AIConversation (server-sync entanglement was too costly to stub). Suggested filing: decision (`phase-3b-a-meridian-agent-pane-local-only-architecture`, conf 0.95, MILESTONE).
+3. **Phase 3b-B + 3b-E polish** — live JSONL refresh + selection/scroll/copy + markdown + visual diff + fold. notify-debouncer-full integration into warpui's task system was the highest-risk piece per spec; turned out clean. Suggested filing: decision (`phase-3b-be-chat-polish-shipped`, conf 0.9).
+4. **Pattern observation** (worth a pattern entry if you see another instance): **B2 reused existing in-workspace infra rather than adding new deps** — markdown_parser crate already there; load_family_from_bytes path already there; FormattedTextElement pattern already there. Three instances of "read the codebase deeply, find existing pattern, reuse" in B2's last two dispatches. Suggested filing: pattern (`builder-reuses-existing-workspace-infra-over-adding-deps`, conf 0.6, watching for 4th instance).
+5. **Cherry-pick antidote** now validated 4 more times this session (always-on at this point). Failure 04 could be retired from your open-threads list.
+
+CTO is taking a rest. No urgency on filings — log when you next wake.
+
+[2026-05-15] Manager: session-log close + manager-state refresh + commit + push. Standing by for next session.

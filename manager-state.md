@@ -114,18 +114,36 @@ Drop:
 
 ## Open Threads (stale-fast; cross-check session-log.md tail before relying)
 
-**Closed since last update (2026-05-14 → 2026-05-15):**
-- ~~B1 + B2 + Lani dispatch verification~~ ✅ Phase 2a verified live across 3 of 4 agents (B3 deferred as redundant)
-- ~~Permission propagation~~ ✅ fixed (`--dangerously-skip-permissions` in dispatch script)
-- ~~Dogfood track — `.app` build~~ ✅ shipped `OpenWarp.app` at `target/release/bundle/osx/`. Daily-driver-installable via `cp -R` to `/Applications`.
+**Closed since last update (during 2026-05-15 marathon session):**
+- ~~Phase 3a-1 brand metadata + font port + black theme~~ ✅ shipped (Hyperdrive bundle identity + Open Sauce Sans for UI chrome; terminal font reverted to Hack after CTO confirmed proportional+grid = broken)
+- ~~Phase 2a auxiliary~~ ✅ relay log + unified watcher + spawn scripts shipped
+- ~~Phase 3b-A MeridianAgent pane (read-only)~~ ✅ shipped (local-only architecture; B2 dispatch)
+- ~~Phase 3b-B + 3b-E combined polish~~ ✅ shipped (live refresh + selection + markdown + visual diff + fold; B2 dispatch)
+- ~~Reset Protocol close-out for all 4 agents~~ ✅ done this session-close
 
-**Open (entering Phase 3):**
-- **Install OpenWarp.app as daily driver** — CTO action: `cp -R ~/meridian-warp/target/release/bundle/osx/OpenWarp.app /Applications/`. One-time, until next release rebuild.
-- **Phase 3a — Brand strip** — Phase 0 carry-over, gates UI work. Need to identify Warp wordmark/icon/copyright surfaces + decide Meridian visual identity. CTO direction needed on identity.
-- **Phase 3b — Manager pane / orchestration surface** — sidebar agent list, native Manager chat pane, live relay visibility, approval gates inline. Recon on Warp UI architecture in progress (Explore agent dispatched 2026-05-15).
-- **Phase 2b** — *deferred until after some Phase 3 work lands.* Shell dispatch is sufficient for Phase 3 UI to call out to.
-- **B3 verification dispatch** — deferred indefinitely; the same mechanic verified on B1 + B2 + Lani is sufficient evidence the pattern is general.
-- **Phase 3c — canvas resurrection** — explicitly own dedicated future phase; not Phase 3a/3b work.
+**Open (next session priorities, in order):**
+1. **Remove `cfg(debug_assertions)` gate on `OpenMeridianAgentDebug` action** — small Builder dispatch (~$2). Currently command is only available in debug builds; debug Hyperdrive is 5-50x slower than release. After this lands, rebuild `--release` and CTO has smooth-perf Hyperdrive with the MeridianAgent pane accessible.
+2. **Phase 3b-C — input from pane** — type into MeridianAgent pane → new turn into agent's session. B2 noted the architecture is "mostly cosmetic" at this point: drop a Text input above last-turn position, on submit shell out to meridian-dispatch.sh, file watcher closes the loop. ~1 Builder dispatch.
+3. **Phase 3b-D — agent registry launcher** — proper command palette commands per agent OR sidebar listing spawned agents with click-to-open. Replaces the cfg(debug_assertions) entry. ~1 Builder dispatch.
+
+**Smaller polish follow-ups B2 flagged (not blocking):**
+- Click-to-expand on folded tool_results (currently static "truncated, NN lines" marker)
+- Sticky scroll (currently always jumps to bottom on new turn, annoying when reading history)
+- Syntax highlighting in code blocks (needs `crates/syntax_tree` integration, deferred)
+- Auto-scroll-detect-user-scrolled-up
+
+**Architectural notes for next session:**
+- Cherry-pick over full-merge is now blessed practice (4+ more validations this session); failure 04 could be retired from threads
+- Agents are sessions, not processes (CTO confirmed this is fine); `claude --resume --print` for each dispatch
+- The file-watcher closes the loop pattern: dispatch writes JSONL → watcher fires → pane refreshes (no special wiring per pane action)
+- Manager NEVER edits .rs / crate-level Cargo.toml — all 3b sub-MVPs are Builder dispatches
+- App is Hyperdrive (product name); Meridian is the parent brand. Bundle identifier currently `dev.hyperdrive.Hyperdrive`; consider `dev.meridian.Hyperdrive` in a future cleanup.
+
+**Deferred to Phase 4+:**
+- Phase 3c — canvas resurrection (own dedicated phase)
+- Phase 2b — Rust port of dispatch into meridian_manager crate (defer; shell dispatch sufficient for UI to call out to)
+- Wordmark / app-icon SVG replacement (waiting on CTO design assets if they want; currently uses upstream Warp SVGs)
+- Brand string audit (low-priority cleanup; upstream identifiers stay for merge surface)
 
 ---
 
