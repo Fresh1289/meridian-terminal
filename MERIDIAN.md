@@ -163,18 +163,39 @@ Grouped by domain. `[P1]` = phase 1 must-have, `[P2]` = phase 2, `[P3]` = post-c
 
 ### Phase 2 — Pipeline & DAG
 - [x] **Transport bridge — Phase 2a (shell-based mechanic)** ✅ shipped 2026-05-14. `script/meridian-dispatch.sh` + `script/meridian-record-session.sh` + per-worktree `SessionStart` hooks. Manager dispatches via `claude --resume <id> --print --output-format json --dangerously-skip-permissions`; session UUID + cwd auto-registered by hook at `~/.meridian/agents/<role>/`. Verified live: Manager → Builder 1 round-trip in ~10s, $0.21 per dispatch. Replaces the copy-paste relay step. NO Rust crate changes this round.
-- [ ] **Transport bridge — Phase 2b (Rust integration)** — port the shell mechanic into `meridian_manager` as `Manager::dispatch_to(role, text) -> Result<Relay, ManagerError>`. Shell-out under the hood; future evolution to a `Transport` trait once a second transport (Warp-native pane API, IPC socket) is needed.
+- [x] **`.app` build + bundle** ✅ shipped 2026-05-15. `cargo build --release --bin warp-oss` + `cargo bundle --release --bin warp-oss` → `target/release/bundle/osx/OpenWarp.app`. Daily-driver dogfood unlocked. Spec'd at top of this file under "The CTO Interface."
+- [ ] **Transport bridge — Phase 2b (Rust integration)** — *deferred, not blocking Phase 3.* Port the shell mechanic into `meridian_manager` as `Manager::dispatch_to(role, text) -> Result<Relay, ManagerError>`. Shell-out under the hood; future evolution to a `Transport` trait once a second transport (Warp-native pane API, IPC socket) is needed. Phase 3 UI can call the script directly until Phase 2b lands.
 - [ ] Task DAG queue + self-heal
 - [ ] Multi-step pipeline (Manager → Builder → QA loop)
 - [ ] Cost tracking / token budgets / model swap
 - [ ] Per-project config & ethos files
 - [ ] Migration tooling for v1.5.0 users
 
-### Phase 3 — Canvas resurrection + polish
-- [ ] Topology canvas (native Rust GPU rendering, not Canvas 2D)
+### Phase 3 — Visible Meridian UI
+
+Phase 3 is where the fork stops looking like upstream OpenWarp and starts looking like Meridian. This is multiple sub-phases.
+
+**Phase 3a — Brand strip (Phase 0 carry-over; gate before any UI add)**
+- [ ] Identify all Warp brand surfaces in the repo (wordmark in app name, icon files in `channels/`, copyright strings, "Warp"/"OpenWarp" string literals in user-facing strings)
+- [ ] Decide Meridian visual identity (wordmark, icon, primary color, font choice — CTO direction needed)
+- [ ] Strip Warp brand, add Meridian brand. Bundle identifier shifts from `dev.openwarp.OpenWarp` to something like `dev.meridian.Meridian`
+- [ ] Verify .app still builds + launches with new brand
+
+**Phase 3b — Manager pane / orchestration surface**
+- [ ] Find or add a "left rail" / sidebar in Warp's UI for agent list (recon in progress)
+- [ ] Manager chat as a Warp pane (or embedded chat panel) — replaces the "open `claude` in a pane" workflow with native chat
+- [ ] Wire `meridian_*` crates into the binary (or call `script/meridian-dispatch.sh` from UI code)
+- [ ] Live indicator of dispatched relays in agent panes (visible relay — addresses the "backend only" complaint)
+- [ ] Approval gate UI inline (when Manager flags a route as high-stakes)
+
+**Phase 3c — Canvas resurrection (deferred to its own dedicated phase)**
+- [ ] Topology canvas (native Rust GPU rendering, not Canvas 2D — Warp already has GPU stack)
+- [ ] Specs preserved at `~/meridian/specs/round3-4-ui-overhaul.md`, etc.
+
+**Phase 3d — Misc polish**
 - [ ] Templates, drive, self-update, audit log
 - [ ] Designer + QA agent roles (re-introduce)
-- [ ] Public launch
+- [ ] Public launch readiness
 
 ## Potential Addons
 
