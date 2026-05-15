@@ -332,13 +332,13 @@ fn test_parse_font_with_default_size() {
 #[test]
 fn test_parse_font_with_default_font() {
     let warp_default_profile = ITermProfile {
-        font_name: Some("Open Sauce Sans".to_string()),
+        font_name: Some("Hack".to_string()),
         font_size: Some("16".to_string()),
         ..Default::default()
     };
     let fonts = [FontInfo {
-        family_name: "Open Sauce Sans".to_string(),
-        font_names: vec!["Open Sauce Sans".to_string()],
+        family_name: "Hack".to_string(),
+        font_names: vec!["Hack".to_string()],
         is_monospace: false,
     }];
     assert_eq!(

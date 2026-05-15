@@ -275,11 +275,11 @@ impl Entity for AppearanceManager {
 impl SingletonEntity for AppearanceManager {}
 
 fn load_default_monospace_font_family(ctx: &mut AppContext) -> anyhow::Result<FamilyId> {
-    // Hyperdrive: the default "terminal text" font is Open Sauce Sans (the v1.5.0 Meridian
-    // brand font), intentionally non-monospace. Hack is preloaded alongside so users can
-    // switch back to a true monospace per-pane via settings.
+    // Hack remains the default monospace family for the terminal grid. Open Sauce Sans
+    // and Open Sauce One are preloaded alongside as opt-in switchable families for the
+    // Hyperdrive brand (selected per-pane via settings).
     warpui::fonts::Cache::handle(ctx).update(ctx, |font_cache, _| {
-        let _hack = font_cache.load_family_from_bytes(
+        let default_monospace_font_family = font_cache.load_family_from_bytes(
             "Hack",
             vec![
                 ASSETS.get("bundled/fonts/hack/Hack-Italic.ttf")?.to_vec(),
@@ -290,7 +290,7 @@ fn load_default_monospace_font_family(ctx: &mut AppContext) -> anyhow::Result<Fa
                     .to_vec(),
             ],
         )?;
-        let default_font_family = font_cache.load_family_from_bytes(
+        let _opensauce_sans = font_cache.load_family_from_bytes(
             "Open Sauce Sans",
             vec![
                 ASSETS
@@ -314,16 +314,17 @@ fn load_default_monospace_font_family(ctx: &mut AppContext) -> anyhow::Result<Fa
                 ASSETS.get("bundled/fonts/OpenSauceOne-Bold.ttf")?.to_vec(),
             ],
         )?;
-        let default_font = font_cache.select_font(default_font_family, Default::default());
+        let default_monospace_font =
+            font_cache.select_font(default_monospace_font_family, Default::default());
         font_cache.glyph_typographic_bounds(
-            default_font,
+            default_monospace_font,
             MonospaceFontSize::default_value(),
             font_cache
-                .glyph_for_char(default_font, 'm', false)
-                .ok_or_else(|| anyhow!("default font has no 'm' glyph"))?
+                .glyph_for_char(default_monospace_font, 'm', false)
+                .ok_or_else(|| anyhow!("monospace font has no 'm' glyph"))?
                 .0,
         )?;
-        Ok(default_font_family)
+        Ok(default_monospace_font_family)
     })
 }
 
