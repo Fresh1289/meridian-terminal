@@ -4,11 +4,10 @@
 # run this to watch the dispatched session work in real time.
 #
 # Usage: script/meridian-watch.sh <role>
-#   role: builder-1 | builder-2 | builder-3 | laniakea (or any registered role)
-#
-# Reads ~/.meridian/agents/<role>/{session-id,cwd} to locate the JSONL,
-# then `tail -F` it with jq filtering to show user prompts + assistant
-# text + tool calls (raw JSONL is too noisy).
+#   role: builder-1 | builder-2 | builder-3 | laniakea (any registered role)
+#   role: relays                — unified all-agents relay timeline
+#                                  (tails ~/.meridian/relay-log.jsonl, written
+#                                  by meridian-dispatch.sh)
 #
 # Press Ctrl+C to detach. Does not stop the session itself.
 
@@ -17,10 +16,39 @@ set -euo pipefail
 if [[ $# -ne 1 ]]; then
     echo "usage: $0 <role>" >&2
     echo "  role: builder-1 | builder-2 | builder-3 | laniakea (etc.)" >&2
+    echo "        relays              — unified all-agents relay timeline" >&2
     exit 2
 fi
 
 role="$1"
+
+# Special pseudo-role: unified relay log across all agents.
+if [[ "$role" == "relays" ]]; then
+    log_file="${HOME}/.meridian/relay-log.jsonl"
+    if [[ ! -f "$log_file" ]]; then
+        echo "relay log doesn't exist yet at $log_file" >&2
+        echo "hint: run meridian-dispatch.sh at least once to create it" >&2
+        echo "tailing anyway in case it gets created..."
+    fi
+    echo "Watching unified relay log: ${log_file}"
+    echo "  -- Ctrl+C to detach --"
+    echo
+
+    tail -F "$log_file" 2>/dev/null | jq -r --unbuffered '
+      if .event == "dispatch" then
+        "📤 [\(.time)] → \(.role): " + (.text | .[0:200])
+      elif .event == "response" then
+        if .exit_code == 0 then
+          "📥 [\(.time)] ← \(.role) ($\(.response.total_cost_usd // 0))  " + ((.response.result // .raw_stdout // "") | tostring | .[0:300])
+        else
+          "❌ [\(.time)] ← \(.role) (exit \(.exit_code)): " + ((.raw_stdout // .response.result // "<no output>") | tostring | .[0:300])
+        end
+      else . end
+    ' 2>/dev/null
+    exit 0
+fi
+
+# Per-role mode: tail a specific agent's live session JSONL.
 role_dir="${HOME}/.meridian/agents/${role}"
 session_file="${role_dir}/session-id"
 cwd_file="${role_dir}/cwd"
